@@ -9,11 +9,11 @@ export interface IUser extends Document {
 
     isVerified: boolean;
 
-    // Staff only
+   
     fullName?: string;
     verifiedBadge?: boolean;
 
-    // Security & audit
+   
     lastLoginAt?: Date;
     createdAt: Date;
     updatedAt: Date;
