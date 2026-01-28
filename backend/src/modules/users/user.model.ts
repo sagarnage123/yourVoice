@@ -13,6 +13,14 @@ export interface IUser extends Document {
     fullName?: string;
     verifiedBadge?: boolean;
 
+    rating?: {
+        average: number;
+        count: number;
+    };
+
+    profileImage?: string;
+
+
    
     lastLoginAt?: Date;
     createdAt: Date;
@@ -56,6 +64,24 @@ const userSchema = new Schema<IUser>(
             default: false,
         },
 
+        profileImage: {
+            type: String,
+            trim: true,
+        },
+
+        rating: {
+            average: {
+                type: Number,
+                min: 0,
+                max: 5,
+                default: 0,
+            },
+            count: {
+                type: Number,
+                default: 0,
+            },
+        },
+
         lastLoginAt: {
             type: Date,
         },
@@ -65,12 +91,14 @@ const userSchema = new Schema<IUser>(
     }
 );
 
-
 userSchema.pre<IUser>("save", async function () {
     if (this.role === "student") {
         this.fullName = undefined;
         this.verifiedBadge = undefined;
+        this.profileImage = undefined;
+        this.rating = undefined;
     }
 });
+
 
 export const User = mongoose.model<IUser>("User", userSchema);
