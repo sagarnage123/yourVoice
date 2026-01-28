@@ -28,8 +28,13 @@ export const createReply = asyncHandler(
 
 export const getReplies = asyncHandler(
     async (req: Request, res: Response) => {
-        const replies = await ReplyService.getReplies(
+        const queryId = getSingleParam(
             req.params.queryId,
+            "queryId"
+        );
+        
+        const replies = await ReplyService.getReplies(
+            queryId,
             req.user!
         );
 

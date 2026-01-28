@@ -13,8 +13,13 @@ export interface IQuery extends Document {
   
     assignedTo?: Types.ObjectId;
     assignedRole?: AssignedRole;
+    likes: number;
 
     isResolved: boolean;
+    isFlagged: boolean;
+    flagReason?: string;
+    flaggedAt?: Date;
+    
     createdAt: Date;
     updatedAt: Date;
 }
@@ -52,9 +57,28 @@ const QuerySchema = new Schema<IQuery>(
             enum: ["teacher", "counsellor"],
         },
 
+        likes: {
+            type: Number,
+            default: 0,
+            min: 0,
+        },
+
+
         isResolved: {
             type: Boolean,
             default: false,
+        },
+        isFlagged: {
+            type: Boolean,
+            default: false,
+        },
+
+        flagReason: {
+            type: String,
+        },
+
+        flaggedAt: {
+            type: Date,
         },
     },
     { timestamps: true }

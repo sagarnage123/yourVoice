@@ -1,6 +1,7 @@
 import { QueryModel } from "./query.model";
 import { AppError } from "../../errors/AppError";
 import { User } from "../users/user.model";
+import { ReplyModel } from "./reply.model";
 
 interface CreateQueryInput {
     type: "public" | "private";
@@ -55,4 +56,44 @@ export const QueryService = {
             createdBy: studentId,
         });
     },
+
+    async getThread(
+        queryId: string,
+        user: { userId: string; role: string }
+    ) {
+        const query = await QueryModel.findById(queryId).lean();
+
+        if (!query) {
+            throw new AppError("Query not found", 404);
+        }
+
+       
+        if (query.type === "private") {
+            if (user.role === "student") {
+                if (query.createdBy.toString() !== user.userId) {
+                    throw new AppError("Access denied", 403);
+                }
+            }
+
+            if (user.role === "teacher" || user.role === "counsellor") {
+                if (query.assignedTo?.toString() !== user.userId) {
+                    throw new AppError("Access denied", 403);
+                }
+            }
+
+            if (user.role === "admin") {
+                throw new AppError(
+                    "Admins cannot view private conversations",
+                    403
+                );
+            }
+        }
+
+        const replies = await ReplyModel.find({ queryId })
+            .sort({ createdAt: 1 })
+            .lean();
+
+        return { query, replies };
+    },
 };
+
