@@ -51,11 +51,16 @@ export class AuthService {
             expiresAt,
         });
        
-        return {
+        const response: any = {
             success: true,
             message: "OTP sent successfully",
-            otp,
         };
+
+        if (process.env.NODE_ENV === "development") {
+            response.otp = otp;
+        }
+
+        return response;
     }
 
     static async verifyAuthToken(

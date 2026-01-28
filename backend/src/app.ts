@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 import healthRoutes from "./routes/health.routes";
 import authRoutes from "./modules/auth/auth.routes";
+import { requireAuth } from "./middlewares/requireAuth";
 
 
 const app: Application = express();
