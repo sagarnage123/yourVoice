@@ -17,6 +17,7 @@ export const requestAuth = asyncHandler(
             message: result.message,
             data: {
                 success: true,
+                otp: result.otp,
             },
         });
     }

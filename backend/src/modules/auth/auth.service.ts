@@ -3,6 +3,9 @@ import { AuthToken } from "./authToken.model";
 import { AllowedIdentity } from "../admin/allowedIdentity.model";
 import { User } from "../users/user.model";
 import { AppError } from "../../errors/AppError";
+import { signToken } from "../../utils/jwt";
+import { presentUser } from "../users/user.presenter";
+
 
 const OTP_EXPIRY_MINUTES = 5;
 const MAX_ATTEMPTS = 5;
@@ -47,11 +50,11 @@ export class AuthService {
             tokenHash,
             expiresAt,
         });
-
+       
         return {
             success: true,
             message: "OTP sent successfully",
-            otp, // remove later
+            otp,
         };
     }
 
@@ -114,6 +117,15 @@ export class AuthService {
             await user.save();
         }
 
-        return user;
+        const jwtToken = signToken({
+            userId: user._id.toString(),
+            role: user.role,
+        });
+
+        return {
+            token: jwtToken,
+            user: presentUser(user),
+        };
+
     }
 }
