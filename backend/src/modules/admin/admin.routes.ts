@@ -7,6 +7,7 @@ import {
 } from "./admin.controller";
 import { requireAuth } from "../../middlewares/requireAuth";
 import { requireRole } from "../../middlewares/requireRole";
+import { getFlaggedQueryOverride } from "./adminOverride.controller";
 
 const router = Router();
 
@@ -19,4 +20,5 @@ router.patch(
     toggleAllowedIdentity
 );
 router.get("/audit-logs", listAuditLogs);
+router.get("/queries/:queryId/override", getFlaggedQueryOverride);
 export default router;
