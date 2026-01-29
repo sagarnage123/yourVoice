@@ -7,9 +7,9 @@ import { requireAuth } from "./middlewares/requireAuth";
 
 const app: Application = express();
 
+app.use("/api/health", healthRoutes);
 app.use(express.json());
 app.use("/api/auth", authRoutes);
-app.use("/api/health", healthRoutes);
 
 app.use(globalErrorHandler);
 
