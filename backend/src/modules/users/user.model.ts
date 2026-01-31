@@ -57,6 +57,11 @@ const userSchema = new Schema<IUser>(
         fullName: {
             type: String,
             trim: true,
+            default: function (this: IUser) {
+                if (this.role === "teacher") return "Teacher";
+                if (this.role === "counsellor") return "Counsellor";
+                return undefined;
+            },
         },
 
         verifiedBadge: {
@@ -67,7 +72,17 @@ const userSchema = new Schema<IUser>(
         profileImage: {
             type: String,
             trim: true,
+            default: function (this: IUser) {
+                if (this.role === "teacher") {
+                    return "https://ui-avatars.com/api/?name=Teacher&background=E0E7FF&color=3730A3";
+                }
+                if (this.role === "counsellor") {
+                    return "https://ui-avatars.com/api/?name=Counsellor&background=D1FAE5&color=065F46";
+                }
+                return undefined;
+            },
         },
+
 
         rating: {
             average: {
@@ -90,7 +105,21 @@ const userSchema = new Schema<IUser>(
         timestamps: true,
     }
 );
+userSchema.index(
+    { phone: 1, role: 1 },
+    {
+        unique: true,
+        sparse: true,
+    }
+);
 
+userSchema.index(
+    { email: 1, role: 1 },
+    {
+        unique: true,
+        sparse: true,
+    }
+);
 userSchema.pre<IUser>("save", async function () {
     if (this.role === "student") {
         this.fullName = undefined;

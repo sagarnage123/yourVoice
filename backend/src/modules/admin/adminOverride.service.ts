@@ -61,4 +61,26 @@ export const AdminOverrideService = {
             },
         };
     },
+
+    async listFlaggedQueries(admin: { userId: string; role: string }) {
+        if (admin.role !== "admin") {
+            throw new AppError("Access denied", 403);
+        }
+      
+        const queries = await QueryModel.find({
+            isFlagged: true,
+        })
+            .select("_id createdAt flagReason")
+            .sort({ createdAt: -1 })
+            .lean();
+        await AuditLogModel.create({
+            actorId: admin.userId,
+            actorRole: admin.role,
+            action: "VIEW_FLAGGED_QUERIES",
+            targetType: "QUERY",
+        });
+
+        return queries;
+    }
+
 };

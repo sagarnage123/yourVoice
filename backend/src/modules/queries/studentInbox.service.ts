@@ -31,6 +31,7 @@ export const StudentInboxService = {
 
                 return {
                     queryId: query._id,
+                    content: query.content,
                     assignedTo: staff
                         ? {
                             id: staff._id,

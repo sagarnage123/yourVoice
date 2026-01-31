@@ -28,6 +28,8 @@ export const StaffInboxService = {
 
                 return {
                     queryId: query._id,
+                    content:query.content,
+                    isFlagged:query.isFlagged,
                     isResolved: query.isResolved,
                     createdAt: query.createdAt,
                     lastMessageAt:

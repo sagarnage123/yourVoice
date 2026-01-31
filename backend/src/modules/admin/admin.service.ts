@@ -16,7 +16,8 @@ export class AdminService {
         identifier: string,
         role: "student" | "teacher" | "counsellor" | "admin",
         adminId: string,
-        adminRole: string
+        adminRole: string,
+        fullName:string | undefined
     ) {
         const existing = await AllowedIdentity.findOne({
             identifier,
@@ -26,10 +27,10 @@ export class AdminService {
         if (existing) {
             throw new AppError("Identity already exists", 409);
         }
-
         const identity = await AllowedIdentity.create({
             identifier,
             role,
+            fullName,
             addedBy: adminId,
         });
 
@@ -61,7 +62,10 @@ export class AdminService {
             targetType: "AllowedIdentity",
         });
 
-        return AllowedIdentity.find().sort({ createdAt: -1 });
+        return AllowedIdentity.find({
+            role: { $in: ["admin", "teacher", "counsellor"] },
+        }).sort({ createdAt: -1 });
+
     }
 
     static async toggleAllowedIdentity(

@@ -20,24 +20,23 @@ export const QueryFlagService = {
                 400
             );
         }
-
+        
         const query = await QueryModel.findById(queryId);
-
+        
         if (!query) {
             throw new AppError("Query not found", 404);
         }
-
+        
         if (query.type !== "private") {
             throw new AppError(
                 "Only private queries can be flagged",
                 400
             );
         }
-
+        
         if (query.assignedTo?.toString() !== user.userId) {
             throw new AppError("Access denied", 403);
         }
-
         if (query.isFlagged) {
             throw new AppError("Query already flagged", 400);
         }
@@ -47,6 +46,7 @@ export const QueryFlagService = {
         query.flaggedAt = new Date();
 
         await query.save();
+        
 
         return true;
     },

@@ -27,3 +27,17 @@ export const getFlaggedQueryOverride = asyncHandler(
         });
     }
 );
+
+export const listFlaggedQueries = asyncHandler(
+    async (req: Request, res: Response) => {
+        
+        const data = await AdminOverrideService.listFlaggedQueries({
+            userId: req.user!.userId,
+            role: req.user!.role,
+        });
+        return sendResponse(res, {
+            message: "Flagged queries fetched",
+            data,
+        });
+    }
+);

@@ -5,6 +5,7 @@ export interface IAllowedIdentity extends Document {
     role: "student" | "teacher" | "counsellor" | "admin";
 
     isActive: boolean;
+    fullName?:string | undefined;
 
     addedBy?: mongoose.Types.ObjectId;
 
@@ -31,7 +32,9 @@ const allowedIdentitySchema = new Schema<IAllowedIdentity>(
             type: Boolean,
             default: true,
         },
-
+        fullName:{
+            type:String
+        },
         addedBy: {
             type: Schema.Types.ObjectId,
             ref: "User",

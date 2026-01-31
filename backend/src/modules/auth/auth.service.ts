@@ -58,6 +58,7 @@ export class AuthService {
 
         if (process.env.NODE_ENV === "development") {
             response.otp = otp;
+            console.log(`Development mode: OTP for ${normalizedIdentifier} is ${otp}`);
         }
 
         return response;
@@ -104,6 +105,16 @@ export class AuthService {
 
         let user = await User.findOne(userQuery);
 
+        const allowedIdentity = await AllowedIdentity.findOne({
+            identifier,
+            role,
+            isActive: true,
+        });
+
+        if (!allowedIdentity) {
+            throw new AppError("Identity not allowed", 403);
+        }
+
         if (!user) {
             user = await User.create({
                 role,
@@ -113,6 +124,10 @@ export class AuthService {
                 phone: normalizedIdentifier.includes("@")
                     ? undefined
                     : normalizedIdentifier,
+                fullName:
+                    role === "teacher" || role === "counsellor"
+                        ? allowedIdentity.fullName
+                        : undefined,
                 isVerified: true,
                 lastLoginAt: new Date(),
             });
@@ -129,7 +144,8 @@ export class AuthService {
 
         return {
             token: jwtToken,
-            user: presentUser(user),
+            id: user._id.toString(),
+            role: user.role,
         };
 
     }

@@ -4,10 +4,12 @@ dotenv.config();
 import app from "./app";
 import { connectDB } from "./config/db";
 import { AllowedIdentity } from "./modules/admin/allowedIdentity.model";
+import { User } from "./modules/users/user.model";
+
 
 
 const PORT = process.env.PORT || 5000;
-
+let flag=false;
 const startServer = async () => {
     try {
         await connectDB();

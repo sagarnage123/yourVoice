@@ -10,6 +10,7 @@ export const flagQuery = asyncHandler(
             req.params.queryId,
             "queryId"
         );
+       
 
         await QueryFlagService.flagQuery(
             queryId,

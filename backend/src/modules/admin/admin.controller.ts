@@ -7,14 +7,22 @@ import { auditLogPresenter } from "./auditLog.presenter";
 
 export const addAllowedIdentity = asyncHandler(
     async (req: Request, res: Response) => {
-        const { identifier, role } = req.body;
+        const { identifier, role ,fullName} = req.body;
         const { userId, role: adminRole } = req.user!;
+        
+        if (
+            (role === "teacher" || role === "counsellor") &&
+            !fullName
+        ) {
+            throw new AppError("Official name is required", 400);
+        }
 
         const identity = await AdminService.addAllowedIdentity(
             identifier.toLowerCase(),
             role,
             userId,
-            adminRole
+            adminRole,
+            fullName
         );
 
         return sendResponse(res, {
