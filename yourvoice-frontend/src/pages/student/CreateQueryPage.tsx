@@ -109,8 +109,7 @@ export default function CreateQueryPage() {
 
     useEffect(() => {
         if (!staffId) return;
-        console.log("Staff selected");
-
+       
         studentStaffService
             .getStaffProfiles()
             .then((list) => {

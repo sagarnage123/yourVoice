@@ -24,7 +24,7 @@ export interface GetStaffProfilesResponse {
 export const studentStaffService = {
     async getStaffProfiles(): Promise<StaffProfile[]> {
         const res = await apiClient.get<GetStaffProfilesResponse>("api/staff/");
-        console.log(res.data.data);
+      
         return res.data.data;
     },
 };

@@ -16,12 +16,11 @@ export function RequestOtp() {
     const [error, setError] = useState<string | null>(null);
 
     async function handleSubmit() {
-        console.log("Handle submit called");
+    
         if (!identifier.trim()) {
             setError("Please enter your email or phone number.");
             return;
         }
-        console.log("Submitting:", { identifier, role });
 
         try {
             setLoading(true);
