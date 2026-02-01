@@ -27,14 +27,14 @@ app.use(express.json());
 
 import cors from "cors";
 
+const allowedOrigins = [
+    "https://yourvoice-zeta.vercel.app",
+];
+
 app.use(
     cors({
         origin: (origin, callback) => {
-            if (!origin) return callback(null, true); 
-
-            const allowedOrigins = [
-                "https://yourvoice-frontend.vercel.app",
-            ];
+            if (!origin) return callback(null, true);
 
             if (allowedOrigins.includes(origin)) {
                 callback(null, true);
@@ -45,7 +45,6 @@ app.use(
         credentials: true,
     })
 );
-
 
 app.use("/api/health", healthRoutes);
 
