@@ -1,16 +1,15 @@
 import express, { Application } from "express";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
 
-// Core
 import healthRoutes from "./routes/health.routes";
 
-// Auth
+
 import authRoutes from "./modules/auth/auth.routes";
 
-// Users / Staff
+
 import staffRoutes from "./modules/users/staff.routes";
 
-// Queries (core domain)
+
 import queryRoutes from "./modules/queries/query.routes";
 import replyRoutes from "./modules/queries/reply.routes";
 import publicQueryRoutes from "./modules/queries/publicQuery.routes";
@@ -30,7 +29,7 @@ import cors from "cors";
 
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin:"https://yourvoice-frontend.vercel.app/",
         credentials: true,
     })
 );

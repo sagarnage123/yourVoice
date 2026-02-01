@@ -5,7 +5,7 @@ import "./index.css";
 import { Toaster } from "react-hot-toast";
 
     export default function App() {
-      // console.log("API BASE URL:", import.meta.env.production.VITE_API_BASE_URL);
+     
     return (
       <BrowserRouter>
         <AuthProvider>
