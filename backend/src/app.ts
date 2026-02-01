@@ -29,10 +29,23 @@ import cors from "cors";
 
 app.use(
     cors({
-        origin:"https://yourvoice-frontend.vercel.app/",
+        origin: (origin, callback) => {
+            if (!origin) return callback(null, true); 
+
+            const allowedOrigins = [
+                "https://yourvoice-frontend.vercel.app",
+            ];
+
+            if (allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
         credentials: true,
     })
 );
+
 
 app.use("/api/health", healthRoutes);
 
