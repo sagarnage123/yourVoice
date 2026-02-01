@@ -1,16 +1,18 @@
 import axios, { AxiosError } from "axios";
-import { API_BASE_URL } from "./env";
+
 import type { ApiError } from "./error";
 import { normalizeAxiosError } from "./normalizeError";
 import { authToken } from "./authToken";
+import.meta.env.VITE_API_BASE_URL
 
 export const apiClient = axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     timeout: 15000,
     headers: {
         "Content-Type": "application/json",
     },
 });
+
 
 apiClient.interceptors.request.use((config) => {
     const token = authToken.get();
