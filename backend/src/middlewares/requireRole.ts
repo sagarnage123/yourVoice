@@ -1,17 +1,9 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Response, Request } from "express";
 import { AppError } from "../errors/AppError";
-import { Request } from "express";
-
-interface AuthenticatedRequest extends Request {
-    user?: {
-        userId: string;
-        role: string;
-    };
-}
 
 export const requireRole = (...allowedRoles: string[]) => {
     return (
-        req: AuthenticatedRequest,
+        req: Request,
         _res: Response,
         next: NextFunction
     ) => {
@@ -20,7 +12,10 @@ export const requireRole = (...allowedRoles: string[]) => {
         }
 
         if (!allowedRoles.includes(req.user.role)) {
-            throw new AppError("You are not authorized to perform this action", 403);
+            throw new AppError(
+                "You are not authorized to perform this action",
+                403
+            );
         }
 
         next();
