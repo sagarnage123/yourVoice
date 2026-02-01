@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { AuthLayout } from "@/components/layout/AuthLayout";
+
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { authService } from "@/api/services/auth.service";
@@ -8,6 +8,8 @@ import { authService } from "@/api/services/auth.service";
 import type { ApiError } from "@/api/error";
 import type { UserRole } from "@/api/services/auth.types";
 
+import { useAuth} from "@/context/AuthContext";
+import { authToken } from "@/api/authToken";
 import { authRole } from "@/api/authRole";
 
 interface LocationState {
@@ -24,6 +26,8 @@ export function VerifyOtp() {
     const [otp, setOtp] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { login } = useAuth();
+
 
     if (!state) {
         navigate("/auth");
@@ -45,8 +49,9 @@ export function VerifyOtp() {
                 token: otp,
                 role: state!.role,
             });
+            login(result.user.role);
+            authToken.set(result.user.token);
             authRole.set(result.user.role);
-            console.log(otp,result.user.role);
             
             if(result.user.role==="student" || result.user.role=="admin")
             navigate(`/${result.user.role}`);
@@ -111,7 +116,6 @@ export function VerifyOtp() {
                 Verify & continue
             </Button>
 
-            {/* Subtle helper */}
             <p className="text-xs text-slate-400 text-center">
                 Didn’t receive the code? Check spam or try again.
             </p>

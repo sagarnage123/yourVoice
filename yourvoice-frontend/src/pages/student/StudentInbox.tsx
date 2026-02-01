@@ -50,7 +50,7 @@ export function StudentInbox() {
                 </button>
             </div>
 
-            <div className="space-y-1 max-h-[calc(100vh-180px)] overflow-y-auto pr-1">
+            <div className="space-y-1 max-h-[calc(100vh-180px)] overflow-y-auto pr-1 scrollbar-hide">
 
                 {loading ? (
                     <div className="p-6 text-sm text-text-muted">

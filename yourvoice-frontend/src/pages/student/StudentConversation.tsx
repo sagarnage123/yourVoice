@@ -44,7 +44,7 @@ export function StudentConversation() {
 
 
     return (
-        <div className="flex h-[calc(100vh-180px)] flex-col rounded-xl bg-bg-surface border border-slate-200 shadow-sm">
+        <div className="page-enter flex h-[calc(100vh-180px)] flex-col rounded-xl bg-bg-surface border border-slate-200 shadow-sm">
            
             <div className="flex-1 overflow-y-auto px-3 py-4 scrollbar-hide">
 
@@ -75,4 +75,3 @@ export function StudentConversation() {
         </div>
     );
 }
-

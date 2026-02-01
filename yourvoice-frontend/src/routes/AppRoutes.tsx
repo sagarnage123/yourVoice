@@ -17,6 +17,8 @@ import { FlaggedQueryDetails } from "@/pages/admin/FlaggedQueryDetails";
 import { PublicQueriesStaff } from "@/pages/staff/PublicQueriesStaff";
 import { CreatePublicQuery } from "@/pages/student/CreatePublicQuery";
 import { AuthLayout } from "@/components/layout/AuthLayout";
+import  AdminAuditLogsPage  from "@/pages/admin/AdminAuditLogsPage";
+
 export function AppRoutes() {
     return (
         <Routes>
@@ -29,7 +31,7 @@ export function AppRoutes() {
 
            
             <Route
-                path="/student/"
+                path="/student"
                 element={
                     <ProtectedRoute allowedRoles={["student"]}>
                         <AppShell>
@@ -92,7 +94,7 @@ export function AppRoutes() {
 
 
             <Route
-                path="/staff/"
+                path="/staff"
                 element={
                     <ProtectedRoute allowedRoles={["teacher", "counselor"]}>
                         <AppShell>
@@ -123,7 +125,7 @@ export function AppRoutes() {
                 }
             />
             <Route
-                path="/admin/allowed-identities"
+                path="/admin/"
                 element={
                     <ProtectedRoute allowedRoles={["admin"]}>
                         <AppShell>
@@ -132,6 +134,17 @@ export function AppRoutes() {
                     </ProtectedRoute>
                 }
             />
+            <Route
+                path="/admin/audit-logs"
+                element={
+                    <ProtectedRoute allowedRoles={["admin"]}>
+                        <AppShell>
+                            <AdminAuditLogsPage />
+                        </AppShell>
+                    </ProtectedRoute>
+                }
+            />
+            
             <Route
                 path="/admin/allowed-identities/all"
                 element={

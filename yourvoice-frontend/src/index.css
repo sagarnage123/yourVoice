@@ -26,5 +26,5 @@
 }
 
 .page-enter {
-    animation: pageEnter 0.25s ease-out;
+    animation: pageEnter 0.35s ease-out;
 }

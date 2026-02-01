@@ -12,7 +12,12 @@ export function ProtectedRoute({
     children,
     allowedRoles,
 }: ProtectedRouteProps) {
-    const { isAuthenticated, role } = useAuth();
+    const { isAuthenticated, role, isInitializing } = useAuth();
+
+    if (isInitializing) {
+        return null; 
+    }
+
 
    
     if (!isAuthenticated) {

@@ -13,6 +13,27 @@ export interface AllowedIdentity {
     isActive: boolean;
     createdAt: string;
 }
+export interface AuditLog {
+    id: string;
+    action: string;
+    actor: {
+        id: string;
+        role: string;
+    };
+    target: string;
+    metadata: Record<string, any>;
+    createdAt: string;
+}
+
+export interface AuditLogsResponse {
+    logs: AuditLog[];
+    pagination: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    };
+}
 
 export const adminService = {
     async addAllowedIdentity(payload: {
@@ -35,4 +56,11 @@ export const adminService = {
         );
         return res.data.data;
     },
+    async fetchAuditLogs(params: {
+        page: number;
+        limit: number;
+    }) : Promise<AuditLogsResponse> {
+    const res = await apiClient.get("/api/admin/audit-logs", { params });
+    return res.data.data as AuditLogsResponse;
+    }
 };
