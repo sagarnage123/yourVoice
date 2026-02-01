@@ -3,7 +3,6 @@ import axios, { AxiosError } from "axios";
 import type { ApiError } from "./error";
 import { normalizeAxiosError } from "./normalizeError";
 import { authToken } from "./authToken";
-import.meta.env.VITE_API_BASE_URL
 
 export const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
