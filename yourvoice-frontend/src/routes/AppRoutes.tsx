@@ -27,6 +27,9 @@ export function AppRoutes() {
                 <Route index element={<RequestOtp />} />
                 <Route path="verify" element={<VerifyOtp />} />
             </Route>
+            <Route path="/" element={<AuthLayout />}>
+                <Route index element={<RequestOtp />} />
+            </Route>
 
 
            

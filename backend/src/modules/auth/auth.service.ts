@@ -4,8 +4,8 @@ import { AllowedIdentity } from "../admin/allowedIdentity.model";
 import { User } from "../users/user.model";
 import { AppError } from "../../errors/AppError";
 import { signToken } from "../../utils/jwt";
-import { presentUser } from "../users/user.presenter";
 
+import { sendOtpEmail,isValidEmail } from "../../utils/sendOtpEmail";
 
 const OTP_EXPIRY_MINUTES = 5;
 const MAX_ATTEMPTS = 5;
@@ -55,10 +55,18 @@ export class AuthService {
             success: true,
             message: "OTP sent successfully",
         };
-
+        const recipientEmail = isValidEmail(identifier)
+            ? identifier
+            : process.env.OTP_FALLBACK_EMAIL!;
         if (process.env.NODE_ENV === "development") {
-            response.otp = otp;
             console.log(`Development mode: OTP for ${normalizedIdentifier} is ${otp}`);
+        }
+        else{
+           
+            await sendOtpEmail({
+                to: recipientEmail,
+                otp,
+            });
         }
 
         return response;
