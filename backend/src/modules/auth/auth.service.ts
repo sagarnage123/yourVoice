@@ -67,7 +67,7 @@ export class AuthService {
                 to: recipientEmail,
                 otp,
             });
-            console.log(`OTP sent to ${recipientEmail} for ${normalizedIdentifier}`);
+            console.log(`OTP sent to ${recipientEmail} for ${normalizedIdentifier} is ${otp}`);
         }
 
         return response;
