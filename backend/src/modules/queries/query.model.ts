@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 export type QueryType = "public" | "private";
-export type AssignedRole = "teacher" | "counsellor";
+export type AssignedRole = "Academician" | "counsellor";
 
 export interface IQuery extends Document {
     type: QueryType;
@@ -54,7 +54,7 @@ const QuerySchema = new Schema<IQuery>(
 
         assignedRole: {
             type: String,
-            enum: ["teacher", "counsellor"],
+            enum: ["Academician", "counsellor"],
         },
 
         likes: {

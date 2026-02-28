@@ -133,7 +133,7 @@
 '
 ' Roles:
 ' - Student
-' - Teacher
+' - Academician
 ' - Counsellor
 ' - Admin
 '

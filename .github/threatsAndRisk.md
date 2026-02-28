@@ -72,7 +72,7 @@ Threat: Anonymous Harassment
 
 Examples
 
-Abusive language toward teachers
+Abusive language toward Academician
 
 Threats disguised as venting
 

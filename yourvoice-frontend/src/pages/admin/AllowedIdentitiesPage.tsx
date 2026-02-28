@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 const ROLE_OPTIONS: AllowedIdentityRole[] = [
     "student",
-    "teacher",
+    "Academician",
     "counsellor",
     "admin",
 ];
@@ -28,7 +28,7 @@ export function AllowedIdentitiesPage() {
             return;
         }
         if (
-            (role === "teacher" || role === "counsellor") &&
+            (role === "Academician" || role === "counsellor") &&
             !fullName.trim()
         ) {
             toast.error("Official name is required");
@@ -42,7 +42,7 @@ export function AllowedIdentitiesPage() {
                 identifier: identifier.trim(),
                 role,
                 fullName:
-                    role === "teacher" || role === "counsellor"
+                    role === "Academician" || role === "counsellor"
                         ? fullName.trim()
                         : undefined,
             });
@@ -134,7 +134,7 @@ export function AllowedIdentitiesPage() {
                             </select>
                         </div>
 
-                        {(role === "teacher" || role === "counsellor") && (
+                        {(role === "Academician" || role === "counsellor") && (
                             <div className="space-y-1 animate-fadeIn">
                                 <label className="text-xs text-text-muted">
                                     Official full name

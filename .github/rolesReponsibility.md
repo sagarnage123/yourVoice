@@ -26,7 +26,7 @@ Report abuse or inappropriate responses
 
 Cannot
 
-See identities of teachers, counsellors, admins (beyond role)
+See identities of Academicians, counsellors, admins (beyond role)
 
 See identities of other students
 
@@ -38,7 +38,7 @@ Access admin or system logs
 
 Be de-anonymized by anyone except admin (in rare cases)
 
-👨‍🏫 Teacher
+👨‍🏫 Academician
 Identity
 
 Verified college faculty
@@ -113,7 +113,7 @@ Highest responsibility role
 
 Can
 
-Manage users (verify teachers/counsellors)
+Manage users (verify Academicians/counsellors)
 
 Manage categories and system configuration
 
@@ -209,7 +209,7 @@ Must be rejected, even if it seems convenient.
 DECISION:
 
 - General queries are public and anonymous.
-- Anyone (students, teachers, counsellors) can respond unless the query is marked private.
+- Anyone (students, Academicians, counsellors) can respond unless the query is marked private.
 - Private queries restrict responses to intended roles.
 
 ANONYMOUS CHAT:

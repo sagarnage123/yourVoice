@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 
 export interface IUser extends Document {
-    role: "student" | "teacher" | "counsellor" | "admin";
+    role: "student" | "Academician" | "counsellor" | "admin";
 
     email?: string;
     phone?: string;
@@ -31,7 +31,7 @@ const userSchema = new Schema<IUser>(
     {
         role: {
             type: String,
-            enum: ["student", "teacher", "counsellor", "admin"],
+            enum: ["student", "Academician", "counsellor", "admin"],
             required: true,
         },
 
@@ -58,7 +58,7 @@ const userSchema = new Schema<IUser>(
             type: String,
             trim: true,
             default: function (this: IUser) {
-                if (this.role === "teacher") return "Teacher";
+                if (this.role === "Academician") return "Academician";
                 if (this.role === "counsellor") return "Counsellor";
                 return undefined;
             },
@@ -73,8 +73,8 @@ const userSchema = new Schema<IUser>(
             type: String,
             trim: true,
             default: function (this: IUser) {
-                if (this.role === "teacher") {
-                    return "https://ui-avatars.com/api/?name=Teacher&background=E0E7FF&color=3730A3";
+                if (this.role === "Academician") {
+                    return "https://ui-avatars.com/api/?name=Academician&background=E0E7FF&color=3730A3";
                 }
                 if (this.role === "counsellor") {
                     return "https://ui-avatars.com/api/?name=Counsellor&background=D1FAE5&color=065F46";

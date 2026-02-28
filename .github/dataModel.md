@@ -7,7 +7,7 @@
 ' staff identity at the data layer.
 '
 ' Students have NO public identifier.
-' Teachers and counsellors are always visible and verified.
+' Academicians and counsellors are always visible and verified.
 
 ' ---------------------------------------------------------
 ' 1. USERS COLLECTION (IDENTITY — ADMIN ONLY)
@@ -22,15 +22,15 @@
 ' - _id
 ' - name
 ' - email
-' - role              (student / teacher / counsellor / admin)
-' - is_verified       (true for teacher/counsellor)
+' - role              (student / Academician / counsellor / admin)
+' - is_verified       (true for Academician/counsellor)
 ' - college_id
 ' - is_active
 ' - created_at
 '
 ' Rules:
 ' - NEVER exposed for students
-' - Exposed ONLY for teachers/counsellors (name + role + verified)
+' - Exposed ONLY for Academicians/counsellors (name + role + verified)
 ' - Admin-only access for identity mapping
 
 ' ---------------------------------------------------------
@@ -68,7 +68,7 @@
 ' - description
 ' - category           (mental / academic / financial / etc.)
 ' - visibility         (public / private)
-' - target_role        (null / teacher / counsellor)
+' - target_role        (null / Academician / counsellor)
 ' - like_count
 ' - is_flagged
 ' - is_removed
@@ -89,8 +89,8 @@
 ' Fields:
 ' - _id
 ' - query_id
-' - responder_role     (student / teacher / counsellor)
-' - responder_user_id  (ONLY for teacher/counsellor)
+' - responder_role     (student / Academician / counsellor)
+' - responder_user_id  (ONLY for Academician/counsellor)
 ' - anonymous_profile_id (ONLY for student)
 ' - message
 ' - is_flagged

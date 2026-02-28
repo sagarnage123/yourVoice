@@ -33,7 +33,7 @@ export const ReplyService = {
             }
         }
 
-        if (user.role === "teacher" || user.role === "counsellor") {
+        if (user.role === "Academician" || user.role === "counsellor") {
             if (query.assignedTo?.toString() !== user.userId) {
                 throw new AppError("Access denied", 403);
             }
@@ -69,7 +69,7 @@ export const ReplyService = {
                 }
             }
 
-            if (user.role === "teacher" || user.role === "counsellor") {
+            if (user.role === "Academician" || user.role === "counsellor") {
                 if (query.assignedTo?.toString() !== user.userId) {
                     throw new AppError("Access denied", 403);
                 }

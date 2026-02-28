@@ -29,10 +29,10 @@ import cors from "cors";
 
 const allowedOrigins = [
     "https://yourvoice-zeta.vercel.app",
+    "http://localhost:5173",
 ];
 
-app.use(
-    cors({
+    cors ( {
         origin: (origin, callback) => {
             if (!origin) return callback(null, true);
 
@@ -40,11 +40,11 @@ app.use(
                 callback(null, true);
             } else {
                 callback(new Error("Not allowed by CORS"));
-            }
-        },
+        }},
+        optionsSuccessStatus: 200,
         credentials: true,
-    })
-);
+    } );           
+app.use(cors());
 
 app.use("/api/health", healthRoutes);
 

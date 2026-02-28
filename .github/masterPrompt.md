@@ -22,8 +22,8 @@
 
 ' - Students are ALWAYS anonymous
 ' - Students have NO alias, NO pseudonym, NO identifier
-' - Teachers and counsellors are ALWAYS visible
-' - Teachers and counsellors show real name + role + verified badge
+' - Academicians and counsellors are ALWAYS visible
+' - Academicians and counsellors show real name + role + verified badge
 ' - Only admins can map anonymous activity to real identity
 ' - De-anonymization is allowed ONLY in rare, extreme cases
 ' - All sensitive actions are logged and auditable
@@ -60,7 +60,7 @@
 ' - Can participate in private threads
 ' - Cannot see any student identity
 '
-' TEACHER / COUNSELLOR:
+' Academician / COUNSELLOR:
 ' - Visible with name + verified badge
 ' - Can respond to queries
 ' - Can handle private queries routed to their role
@@ -86,7 +86,7 @@
 '
 ' PRIVATE QUERIES:
 ' - Anonymous student posts
-' - Routed to teacher or counsellor
+' - Routed to Academician or counsellor
 ' - Only intended roles can respond
 '
 ' COMMUNICATION:

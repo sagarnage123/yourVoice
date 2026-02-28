@@ -4,7 +4,7 @@ import { AppError } from "../../errors/AppError";
 
 export const StaffInboxService = {
     async getInbox(user: { userId: string; role: string }) {
-        if (user.role !== "teacher" && user.role !== "counsellor") {
+        if (user.role !== "Academician" && user.role !== "counsellor") {
             throw new AppError("Access denied", 403);
         }
 

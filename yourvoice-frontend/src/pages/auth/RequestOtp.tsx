@@ -80,7 +80,7 @@ export function RequestOtp() {
                         disabled={loading}
                     >
                         <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
+                        <option value="Academician">Academician</option>
                         <option value="counselor">Counselor</option>
                         <option value="admin">Admin</option>
                     </select>

@@ -82,7 +82,7 @@ export function AppShell({ children }: AppShellProps) {
                             </>
                         )}
 
-                        {(role === "teacher" || role === "counselor") && (
+                        {(role === "Academician" || role === "counselor") && (
                             <>
                                 <NavItem to="/staff" label="Public" />
                                 <NavItem to="/staff/inbox" label="Inbox" />

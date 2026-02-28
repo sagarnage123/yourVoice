@@ -2,7 +2,7 @@ import { apiClient } from "../../api/axios";
 
 export type AllowedIdentityRole =
     | "student"
-    | "teacher"
+    | "Academician"
     | "counsellor"
     | "admin";
 

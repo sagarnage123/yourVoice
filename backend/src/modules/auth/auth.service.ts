@@ -13,7 +13,7 @@ const MAX_ATTEMPTS = 5;
 export class AuthService {
     static async requestAuthToken(
         identifier: string,
-        role: "student" | "teacher" | "counsellor" | "admin"
+        role: "student" | "Academician" | "counsellor" | "admin"
     ) {
         const normalizedIdentifier = identifier.toLowerCase();
 
@@ -67,6 +67,7 @@ export class AuthService {
                 to: recipientEmail,
                 otp,
             });
+            console.log(`OTP sent to ${recipientEmail} for ${normalizedIdentifier}`);
         }
 
         return response;
@@ -74,7 +75,7 @@ export class AuthService {
 
     static async verifyAuthToken(
         identifier: string,
-        role: "student" | "teacher" | "counsellor" | "admin",
+        role: "student" | "Academician" | "counsellor" | "admin",
         token: string
     ) {
         const normalizedIdentifier = identifier.toLowerCase();
@@ -133,7 +134,7 @@ export class AuthService {
                     ? undefined
                     : normalizedIdentifier,
                 fullName:
-                    role === "teacher" || role === "counsellor"
+                    role === "Academician" || role === "counsellor"
                         ? allowedIdentity.fullName
                         : undefined,
                 isVerified: true,

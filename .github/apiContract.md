@@ -82,7 +82,7 @@
 ' - reason
 
 ' ---------------------------------------------------------
-' TEACHER / COUNSELLOR
+' Academician / COUNSELLOR
 ' ---------------------------------------------------------
 
 ' GET /assigned-queries
@@ -112,7 +112,7 @@
 
 ' - Student identity NEVER appears in responses
 ' - Student shown ONLY as "Anonymous Student"
-' - Teacher/Counsellor shown as:
+' - Academician/Counsellor shown as:
 '   Name + Role + Verified badge
 ' - Admin-only endpoints never exposed to frontend
 

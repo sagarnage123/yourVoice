@@ -31,11 +31,11 @@ export const QueryService = {
             }
 
             if (
-                staff.role !== "teacher" &&
+                staff.role !== "Academician" &&
                 staff.role !== "counsellor"
             ) {
                 throw new AppError(
-                    "Queries can only be assigned to teachers or counsellors",
+                    "Queries can only be assigned to Academician or counsellors",
                     400
                 );
             }
@@ -75,7 +75,7 @@ export const QueryService = {
                 }
             }
 
-            if (user.role === "teacher" || user.role === "counsellor") {
+            if (user.role === "Academician" || user.role === "counsellor") {
                 if (query.assignedTo?.toString() !== user.userId) {
                     throw new AppError("Access denied", 403);
                 }

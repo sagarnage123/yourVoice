@@ -3,7 +3,7 @@ import crypto from "crypto";
 
 export interface IAuthToken extends Document {
     identifier: string; // email or phone
-    role: "student" | "teacher" | "counsellor" | "admin";
+    role: "student" | "Academician" | "counsellor" | "admin";
 
     tokenHash: string;
 
@@ -28,7 +28,7 @@ const authTokenSchema = new Schema<IAuthToken>(
 
         role: {
             type: String,
-            enum: ["student", "teacher", "counsellor", "admin"],
+            enum: ["Academician", "counselor", "admin"],
             required: true,
         },
 

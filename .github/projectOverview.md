@@ -1,6 +1,6 @@
 Project Overview
 
-This repository contains a production-grade, college-only web platform that allows students to anonymously share sensitive issues with verified teachers and counsellors.
+This repository contains a production-grade, college-only web platform that allows students to anonymously share sensitive issues with verified Academicians and counsellors.
 
 The platform focuses on mental health, academic, financial, personal, and emotional concerns, enabling students to speak freely without fear of identity exposure.
 
@@ -14,7 +14,7 @@ Anonymity Model (Non-Negotiable)
 
 Students are anonymous to:
 
-Teachers
+Academicians
 
 Counsellors
 
@@ -86,7 +86,7 @@ Platform Scope
 
 College-only system
 
-Verified students, teachers, counsellors, and admins
+Verified students, Academicians, counsellors, and admins
 
 No public access
 

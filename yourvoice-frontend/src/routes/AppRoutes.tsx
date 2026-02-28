@@ -99,7 +99,7 @@ export function AppRoutes() {
             <Route
                 path="/staff"
                 element={
-                    <ProtectedRoute allowedRoles={["teacher", "counselor"]}>
+                    <ProtectedRoute allowedRoles={["Academician", "counselor"]}>
                         <AppShell>
                             <PublicQueriesStaff />
                         </AppShell>
@@ -110,7 +110,7 @@ export function AppRoutes() {
             <Route
                 path="/staff/inbox"
                 element={
-                    <ProtectedRoute allowedRoles={["teacher", "counselor"]}>
+                    <ProtectedRoute allowedRoles={["Academician", "counselor"]}>
                         <AppShell>
                             <StaffInbox />
                         </AppShell>
@@ -120,7 +120,7 @@ export function AppRoutes() {
             <Route
                 path="/staff/inbox/:queryId"
                 element={
-                    <ProtectedRoute allowedRoles={["teacher", "counselor"]}>
+                    <ProtectedRoute allowedRoles={["Academician", "counselor"]}>
                         <AppShell>
                             <StaffConversation />
                         </AppShell>

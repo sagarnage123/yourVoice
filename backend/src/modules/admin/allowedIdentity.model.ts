@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IAllowedIdentity extends Document {
     identifier: string; // email or phone
-    role: "student" | "teacher" | "counsellor" | "admin";
+    role: "student" | "Academician" | "counsellor" | "admin";
 
     isActive: boolean;
     fullName?:string | undefined;
@@ -24,7 +24,7 @@ const allowedIdentitySchema = new Schema<IAllowedIdentity>(
 
         role: {
             type: String,
-            enum: ["student", "teacher", "counsellor", "admin"],
+            enum: ["student", "Academician", "counsellor", "admin"],
             required: true,
         },
 

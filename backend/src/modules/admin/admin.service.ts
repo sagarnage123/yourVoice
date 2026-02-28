@@ -14,7 +14,7 @@ interface ListAuditLogsParams {
 export class AdminService {
     static async addAllowedIdentity(
         identifier: string,
-        role: "student" | "teacher" | "counsellor" | "admin",
+        role: "student" | "Academician" | "counsellor" | "admin",
         adminId: string,
         adminRole: string,
         fullName:string | undefined
@@ -63,7 +63,7 @@ export class AdminService {
         });
 
         return AllowedIdentity.find({
-            role: { $in: ["admin", "teacher", "counsellor"] },
+            role: { $in: ["admin", "Academician", "counsellor"] },
         }).sort({ createdAt: -1 });
 
     }

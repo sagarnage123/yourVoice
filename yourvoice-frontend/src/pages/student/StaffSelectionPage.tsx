@@ -9,7 +9,7 @@ function Header() {
                 Start a new conversation
             </h1>
             <p className="mt-2 text-slate-500 max-w-xl">
-                Choose a teacher or counselor you’d like to connect with.
+                Choose a Academician or counselor you’d like to connect with.
             </p>
         </div>
     );
@@ -40,8 +40,8 @@ function StaffCard({
                     <div className="flex items-center justify-between">
                         <h3 className="text-base font-medium text-slate-900">
                             {staff.name === "staff"
-                                ? staff.role === "teacher"
-                                    ? "Teacher"
+                                ? staff.role === "Academician"
+                                    ? "Academician"
                                     : "Counselor"
                                 : staff.name}
                         </h3>
@@ -60,9 +60,9 @@ function StaffCard({
         </button>
     );
 }
-function Avatar({ role }: { role: "teacher" | "counselor" }) {
+function Avatar({ role }: { role: "Academician" | "counselor" }) {
     const styles =
-        role === "teacher"
+        role === "Academician"
             ? "bg-indigo-100 text-indigo-600"
             : "bg-emerald-100 text-emerald-600";
 
@@ -75,13 +75,13 @@ function Avatar({ role }: { role: "teacher" | "counselor" }) {
         ${styles}
       `}
         >
-            {role === "teacher" ? "T" : "C"}
+            {role === "Academician" ? "A" : "C"}
         </div>
     );
 }
-function RoleBadge({ role }: { role: "teacher" | "counselor" }) {
+function RoleBadge({ role }: { role: "Academician" | "counselor" }) {
     const styles =
-        role === "teacher"
+        role === "Academician"
             ? "bg-indigo-50 text-indigo-600"
             : "bg-emerald-50 text-emerald-600";
 

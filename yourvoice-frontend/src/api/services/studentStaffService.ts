@@ -1,6 +1,6 @@
 import {apiClient} from "@/api/axios";
 
-export type StaffRole = "teacher" | "counselor";
+export type StaffRole = "Academician" | "counselor";
 
 export interface StaffRating {
     average: number;

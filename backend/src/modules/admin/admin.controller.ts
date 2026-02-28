@@ -11,7 +11,7 @@ export const addAllowedIdentity = asyncHandler(
         const { userId, role: adminRole } = req.user!;
         
         if (
-            (role === "teacher" || role === "counsellor") &&
+            (role === "Academician" || role === "counsellor") &&
             !fullName
         ) {
             throw new AppError("Official name is required", 400);
