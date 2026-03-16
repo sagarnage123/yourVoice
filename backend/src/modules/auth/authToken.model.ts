@@ -28,7 +28,7 @@ const authTokenSchema = new Schema<IAuthToken>(
 
         role: {
             type: String,
-            enum: ["Academician", "counselor", "admin"],
+            enum: ["student", "Academician", "counselor", "admin"],
             required: true,
         },
 

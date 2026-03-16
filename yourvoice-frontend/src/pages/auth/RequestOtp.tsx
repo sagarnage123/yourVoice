@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AuthLayout } from "@/components/layout/AuthLayout";
+
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import { authService } from "@/api/services/auth.service";

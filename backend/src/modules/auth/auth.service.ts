@@ -22,11 +22,12 @@ export class AuthService {
             role,
             isActive: true,
         });
-
+       
         if (!allowed) {
+            console.log(`Unauthorized OTP request for ${normalizedIdentifier} with role ${role}`);
             throw new AppError("Access not allowed", 403);
         }
-
+        
         await AuthToken.updateMany(
             {
                 identifier: normalizedIdentifier,
@@ -43,13 +44,25 @@ export class AuthService {
         const expiresAt = new Date(
             Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000
         );
-
+        try {
+            await AuthToken.create({
+                identifier: normalizedIdentifier,   
+                role,
+                tokenHash,
+                expiresAt,
+            });
+        } catch (error) {
+            console.error(`Error creating auth token for ${normalizedIdentifier} with role ${role}:`, error);
+            throw new AppError("Internal server error", 500);
+        }
         await AuthToken.create({
             identifier: normalizedIdentifier,
             role,
             tokenHash,
             expiresAt,
         });
+
+        console.log(`Creating auth token for ${normalizedIdentifier} with role ${role}`);   
        
         const response: any = {
             success: true,
@@ -58,11 +71,11 @@ export class AuthService {
         const recipientEmail = isValidEmail(identifier)
             ? identifier
             : process.env.OTP_FALLBACK_EMAIL!;
+            console.log(`Sending OTP to ${recipientEmail} for ${normalizedIdentifier}`);
         if (process.env.NODE_ENV === "development") {
             console.log(`Development mode: OTP for ${normalizedIdentifier} is ${otp}`);
         }
         else{
-           
             await sendOtpEmail({
                 to: recipientEmail,
                 otp,
@@ -79,73 +92,88 @@ export class AuthService {
         token: string
     ) {
         const normalizedIdentifier = identifier.toLowerCase();
-
-        const authToken = await AuthToken.findOne({
-            identifier: normalizedIdentifier,
-            role,
-            used: false,
-            expiresAt: { $gt: new Date() },
-        }).sort({ createdAt: -1 });
-
-        if (!authToken) {
-            throw new AppError("Invalid or expired token", 401);
+        
+        const authToken= await AuthToken.findOneAndUpdate({
+                    identifier: normalizedIdentifier,
+                    role,
+                    used: false
+                }, {
+                    $inc: { attempts: 1 }
+                }).sort({ createdAt: -1 });
+               
+       if(!authToken){
+        console.log(`No valid auth token found for ${normalizedIdentifier} with role ${role}`);
+        throw new AppError("Invalid or expired token", 401);
+       }
+       if (authToken.attempts >= MAX_ATTEMPTS) {
+           authToken.used = true;
+           await authToken.save();
+           throw new AppError("Too many attempts", 429);
         }
-
-        if (authToken.attempts >= MAX_ATTEMPTS) {
-            authToken.used = true;
-            await authToken.save();
-            throw new AppError("Too many attempts", 429);
-        }
-
+        
         const tokenHash = AuthToken.hashToken(token);
-
+        
         if (tokenHash !== authToken.tokenHash) {
             authToken.attempts += 1;
             await authToken.save();
             throw new AppError("Invalid token", 401);
         }
-
+        
         authToken.used = true;
         await authToken.save();
-
-        const userQuery = normalizedIdentifier.includes("@")
-            ? { email: normalizedIdentifier }
-            : { phone: normalizedIdentifier };
-
+        
+        const userQuery = {
+            identifier:normalizedIdentifier.includes("@")
+        ? { email: normalizedIdentifier }
+        : { phone: normalizedIdentifier },
+            role,
+        };
+        
         let user = await User.findOne(userQuery);
-
+        
         const allowedIdentity = await AllowedIdentity.findOne({
             identifier,
             role,
             isActive: true,
         });
-
+        
         if (!allowedIdentity) {
             throw new AppError("Identity not allowed", 403);
         }
-
+        
         if (!user) {
+    
             user = await User.create({
                 role,
                 email: normalizedIdentifier.includes("@")
-                    ? normalizedIdentifier
-                    : undefined,
+                ? normalizedIdentifier
+                : undefined,
                 phone: normalizedIdentifier.includes("@")
-                    ? undefined
-                    : normalizedIdentifier,
+                ? undefined
+                : normalizedIdentifier,
                 fullName:
-                    role === "Academician" || role === "counsellor"
-                        ? allowedIdentity.fullName
-                        : undefined,
+                role === "Academician" || role === "counsellor"
+                ? allowedIdentity.fullName
+                : undefined,
                 isVerified: true,
                 lastLoginAt: new Date(),
             });
+        
         } else {
-            user.isVerified = true;
-            user.lastLoginAt = new Date();
-            await user.save();
+            try {
+                user.isVerified = true;
+                user.lastLoginAt = new Date();
+                await user.save();
+            } catch (error) {
+                console.error(`Error updating user ${user._id} for ${normalizedIdentifier} with role ${role}:`, error);
+                throw new AppError("Internal server error", 500);
+            }
+            // user.isVerified = true;
+            // user.lastLoginAt = new Date();
+            // await user.save();
         }
-
+        
+        console.log(`Verifying auth token for ${normalizedIdentifier} with role ${role}`);
         const jwtToken = signToken({
             userId: user._id.toString(),
             role: user.role,

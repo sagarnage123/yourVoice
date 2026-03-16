@@ -23,7 +23,7 @@ If you didn’t request this, you can safely ignore this email.`,
 }
 
 export function isValidEmail(value: string) {
-    if(value===undefined || value===null || value==="student1@college.edu") return false;
+    if(value===undefined || value===null || value==="student2@college.edu" || value==="student1@college.edu") return false;
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
