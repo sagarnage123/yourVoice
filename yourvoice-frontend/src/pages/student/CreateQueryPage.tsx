@@ -40,7 +40,7 @@ function StaffPreview({ staff }: { staff: StaffProfile }) {
               
                 <div className="min-w-0 flex-1">
                     <div className="text-lg font-medium text-slate-900 wrap-break-word">
-                        {staff.name}
+                        {staff.fullName}
                     </div>
 
                     <div className="mt-0.5 text-sm text-slate-500 capitalize">

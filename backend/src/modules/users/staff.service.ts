@@ -5,7 +5,7 @@ export const StaffService = {
         return User.find({
             role: { $in: ["Academician", "counsellor"] },
         })
-            .select("name role rating profileImage")
+            .select("name fullName role rating profileImage")
             .lean();
     },
 };

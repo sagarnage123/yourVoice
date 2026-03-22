@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IAllowedIdentity extends Document {
-    identifier: string; // email or phone
+    identifier: string; 
     role: "student" | "Academician" | "counsellor" | "admin";
 
     isActive: boolean;

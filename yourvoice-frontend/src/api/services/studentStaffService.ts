@@ -1,6 +1,6 @@
 import {apiClient} from "@/api/axios";
 
-export type StaffRole = "Academician" | "counselor";
+export type StaffRole = "Academician" | "counsellor";
 
 export interface StaffRating {
     average: number;
@@ -10,6 +10,7 @@ export interface StaffRating {
 export interface StaffProfile {
     id: string;
     name:string | "staff";
+    fullName:string;
     role: StaffRole;
     rating: StaffRating;
     profileImage:string;
@@ -24,7 +25,7 @@ export interface GetStaffProfilesResponse {
 export const studentStaffService = {
     async getStaffProfiles(): Promise<StaffProfile[]> {
         const res = await apiClient.get<GetStaffProfilesResponse>("api/staff/");
-      
+        
         return res.data.data;
     },
 };

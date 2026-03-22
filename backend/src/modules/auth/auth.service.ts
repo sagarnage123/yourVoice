@@ -20,13 +20,13 @@ export class AuthService {
         const allowed = await AllowedIdentity.findOne({
             identifier: normalizedIdentifier,
             role,
-            isActive: true,
         });
        
         if (!allowed) {
             console.log(`Unauthorized OTP request for ${normalizedIdentifier} with role ${role}`);
             throw new AppError("Access not allowed", 403);
         }
+        
         
         await AuthToken.updateMany(
             {
@@ -44,26 +44,15 @@ export class AuthService {
         const expiresAt = new Date(
             Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000
         );
-        try {
-            await AuthToken.create({
-                identifier: normalizedIdentifier,   
-                role,
-                tokenHash,
-                expiresAt,
-            });
-        } catch (error) {
-            console.error(`Error creating auth token for ${normalizedIdentifier} with role ${role}:`, error);
-            throw new AppError("Internal server error", 500);
-        }
+        
         await AuthToken.create({
             identifier: normalizedIdentifier,
             role,
             tokenHash,
             expiresAt,
         });
+        console.log(`Generatedeee OTP for ${normalizedIdentifier} with role ${role}`);
 
-        console.log(`Creating auth token for ${normalizedIdentifier} with role ${role}`);   
-       
         const response: any = {
             success: true,
             message: "OTP sent successfully",
@@ -102,7 +91,6 @@ export class AuthService {
                 }).sort({ createdAt: -1 });
                
        if(!authToken){
-        console.log(`No valid auth token found for ${normalizedIdentifier} with role ${role}`);
         throw new AppError("Invalid or expired token", 401);
        }
        if (authToken.attempts >= MAX_ATTEMPTS) {
@@ -114,7 +102,6 @@ export class AuthService {
         const tokenHash = AuthToken.hashToken(token);
         
         if (tokenHash !== authToken.tokenHash) {
-            authToken.attempts += 1;
             await authToken.save();
             throw new AppError("Invalid token", 401);
         }
@@ -122,14 +109,10 @@ export class AuthService {
         authToken.used = true;
         await authToken.save();
         
-        const userQuery = {
-            identifier:normalizedIdentifier.includes("@")
-        ? { email: normalizedIdentifier }
-        : { phone: normalizedIdentifier },
-            role,
-        };
+        const userQuery = normalizedIdentifier.includes("@")
+            ? { email: normalizedIdentifier, role }
+            : { phone: normalizedIdentifier, role };
         
-        let user = await User.findOne(userQuery);
         
         const allowedIdentity = await AllowedIdentity.findOne({
             identifier,
@@ -140,9 +123,10 @@ export class AuthService {
         if (!allowedIdentity) {
             throw new AppError("Identity not allowed", 403);
         }
+
+        let user = await User.findOne(userQuery);
         
         if (!user) {
-    
             user = await User.create({
                 role,
                 email: normalizedIdentifier.includes("@")
@@ -159,21 +143,8 @@ export class AuthService {
                 lastLoginAt: new Date(),
             });
         
-        } else {
-            try {
-                user.isVerified = true;
-                user.lastLoginAt = new Date();
-                await user.save();
-            } catch (error) {
-                console.error(`Error updating user ${user._id} for ${normalizedIdentifier} with role ${role}:`, error);
-                throw new AppError("Internal server error", 500);
-            }
-            // user.isVerified = true;
-            // user.lastLoginAt = new Date();
-            // await user.save();
         }
         
-        console.log(`Verifying auth token for ${normalizedIdentifier} with role ${role}`);
         const jwtToken = signToken({
             userId: user._id.toString(),
             role: user.role,

@@ -19,14 +19,17 @@ export class AdminService {
         adminRole: string,
         fullName:string | undefined
     ) {
+       
         const existing = await AllowedIdentity.findOne({
             identifier,
             role,
         });
 
         if (existing) {
+            
             throw new AppError("Identity already exists", 409);
         }
+        
         const identity = await AllowedIdentity.create({
             identifier,
             role,

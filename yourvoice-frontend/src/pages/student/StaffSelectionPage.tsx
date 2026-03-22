@@ -9,7 +9,7 @@ function Header() {
                 Start a new conversation
             </h1>
             <p className="mt-2 text-slate-500 max-w-xl">
-                Choose a Academician or counselor you’d like to connect with.
+                Choose a Academician or counsellor you’d like to connect with.
             </p>
         </div>
     );
@@ -42,8 +42,11 @@ function StaffCard({
                             {staff.name === "staff"
                                 ? staff.role === "Academician"
                                     ? "Academician"
-                                    : "Counselor"
+                                    : "counsellor"
                                 : staff.name}
+                        </h3>
+                        <h3 className="text-base font-medium text-slate-900">
+                            {staff.fullName}
                         </h3>
 
                         <RoleBadge role={staff.role} />
@@ -60,7 +63,7 @@ function StaffCard({
         </button>
     );
 }
-function Avatar({ role }: { role: "Academician" | "counselor" }) {
+function Avatar({ role }: { role: "Academician" | "counsellor" }) {
     const styles =
         role === "Academician"
             ? "bg-indigo-100 text-indigo-600"
@@ -79,7 +82,7 @@ function Avatar({ role }: { role: "Academician" | "counselor" }) {
         </div>
     );
 }
-function RoleBadge({ role }: { role: "Academician" | "counselor" }) {
+function RoleBadge({ role }: { role: "Academician" | "counsellor" }) {
     const styles =
         role === "Academician"
             ? "bg-indigo-50 text-indigo-600"

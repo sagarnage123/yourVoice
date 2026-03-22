@@ -81,7 +81,7 @@ export function RequestOtp() {
                     >
                         <option value="student">Student</option>
                         <option value="Academician">Academician</option>
-                        <option value="counselor">Counselor</option>
+                    <option value="counsellor">Counsellor</option>
                         <option value="admin">Admin</option>
                     </select>
                 </div>

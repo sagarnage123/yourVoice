@@ -1,4 +1,4 @@
-export type UserRole = "student" | "Academician" | "admin" | "counselor";
+export type UserRole = "student" | "Academician" | "admin" | "counsellor";
 
 export interface RequestAuthPayload {
     identifier: string;
