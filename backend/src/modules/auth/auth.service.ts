@@ -51,7 +51,9 @@ export class AuthService {
             tokenHash,
             expiresAt,
         });
-        console.log(`Generatedeee OTP for ${normalizedIdentifier} with role ${role}`);
+        if(process.env.NODE_ENV === "development"){
+            console.log(`Generated OTP for ${normalizedIdentifier} with role ${role} is ${otp}`);
+        }
 
         const response: any = {
             success: true,
@@ -60,7 +62,7 @@ export class AuthService {
         const recipientEmail = isValidEmail(identifier)
             ? identifier
             : process.env.OTP_FALLBACK_EMAIL!;
-            console.log(`Sending OTP to ${recipientEmail} for ${normalizedIdentifier}`);
+           
         if (process.env.NODE_ENV === "development") {
             console.log(`Development mode: OTP for ${normalizedIdentifier} is ${otp}`);
         }
@@ -69,7 +71,7 @@ export class AuthService {
                 to: recipientEmail,
                 otp,
             });
-            console.log(`OTP sent to ${recipientEmail} for ${normalizedIdentifier} is ${otp}`);
+           
         }
 
         return response;
@@ -115,7 +117,7 @@ export class AuthService {
         
         
         const allowedIdentity = await AllowedIdentity.findOne({
-            identifier,
+            identifier: normalizedIdentifier,
             role,
             isActive: true,
         });
@@ -135,10 +137,22 @@ export class AuthService {
                 phone: normalizedIdentifier.includes("@")
                 ? undefined
                 : normalizedIdentifier,
+
                 fullName:
                 role === "Academician" || role === "counsellor"
                 ? allowedIdentity.fullName
                 : undefined,
+
+                areaOfExpertise:
+                    role === "Academician" || role === "counsellor"
+                        ? (allowedIdentity.areaOfExpertise ?? [])
+                        : undefined,
+
+                about:
+                role === "Academician" || role === "counsellor"
+                        ? (allowedIdentity.about ?? "")
+                        : undefined,
+
                 isVerified: true,
                 lastLoginAt: new Date(),
             });
@@ -149,7 +163,9 @@ export class AuthService {
             userId: user._id.toString(),
             role: user.role,
         });
-
+        if(process.env.NODE_ENV === "development"){
+            console.log(`Generated JWT for user ${user._id.toString()} with role ${user.role} is ${jwtToken}`);
+        }
         return {
             token: jwtToken,
             id: user._id.toString(),

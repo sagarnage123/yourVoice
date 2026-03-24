@@ -4,6 +4,7 @@ import {
     listAllowedIdentities,
     listAuditLogs,
     toggleAllowedIdentity,
+    updateAllowedIdentityProfile,
 } from "./admin.controller";
 import { requireAuth } from "../../middlewares/requireAuth";
 import { requireRole } from "../../middlewares/requireRole";
@@ -14,6 +15,14 @@ const router = Router();
 router.use(requireAuth, requireRole("admin"));
 
 router.post("/allowed-identities", addAllowedIdentity);
+
+
+router.patch(
+    "/allowed-identity/:identityId/profile",
+    updateAllowedIdentityProfile
+);
+
+
 router.get("/allowed-identities", listAllowedIdentities);
 router.patch(
     "/allowed-identities/:id/toggle",

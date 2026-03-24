@@ -7,7 +7,7 @@ import { auditLogPresenter } from "./auditLog.presenter";
 
 export const addAllowedIdentity = asyncHandler(
     async (req: Request, res: Response) => {
-        const { identifier, role ,fullName} = req.body;
+        const { identifier, role ,fullName, areaOfExpertise, about } = req.body;
         const { userId, role: adminRole } = req.user!;
         
         if (
@@ -22,7 +22,9 @@ export const addAllowedIdentity = asyncHandler(
             role,
             userId,
             adminRole,
-            fullName
+            fullName,
+            areaOfExpertise,
+            about
         );
 
         return sendResponse(res, {
@@ -32,6 +34,48 @@ export const addAllowedIdentity = asyncHandler(
         });
     }
 );
+export const updateAllowedIdentityProfile = asyncHandler(
+    async (req: Request, res: Response) => {
+
+        const rawId = req.params.identityId;
+        
+        if (Array.isArray(rawId)) {
+            throw new AppError("Invalid identity id", 400);
+        }
+        const id = rawId;
+
+        const { fullName, areaOfExpertise, about } = req.body;
+        const { userId ,role:adminRole} = req.user!;
+
+        if (
+            areaOfExpertise !== undefined &&
+            !Array.isArray(areaOfExpertise)
+        ) {
+            throw new AppError("areaOfExpertise must be an array", 400);
+        }
+
+        if (about !== undefined && typeof about !== "string") {
+            throw new AppError("about must be a string", 400);
+        }
+        const identity = await AdminService.updateAllowedIdentityProfile(
+            id,
+            userId,
+            fullName,
+            adminRole,
+            areaOfExpertise,
+            about
+        );
+        return sendResponse(res, {
+            statusCode: 200,
+            message: "Identity profile updated successfully",
+            data: identity,
+        });
+    }
+);
+
+
+
+
 
 export const listAllowedIdentities = asyncHandler(
     async (req: Request, res: Response) => {

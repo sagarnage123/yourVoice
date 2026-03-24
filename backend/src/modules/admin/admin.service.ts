@@ -17,7 +17,9 @@ export class AdminService {
         role: "student" | "Academician" | "counsellor" | "admin",
         adminId: string,
         adminRole: string,
-        fullName:string | undefined
+        fullName:string | undefined,
+        areaOfExpertise?: string[],
+        about?: string
     ) {
        
         const existing = await AllowedIdentity.findOne({
@@ -34,6 +36,8 @@ export class AdminService {
             identifier,
             role,
             fullName,
+            areaOfExpertise: areaOfExpertise ?? [],
+            about: about ?? "",
             addedBy: adminId,
         });
 
@@ -49,6 +53,53 @@ export class AdminService {
                 role,
             },
         });
+
+        return identity;
+    }
+    static async updateAllowedIdentityProfile(
+        identityId: string,
+        adminId: string,
+        fullName?: string,
+        adminRole?: string,
+        areaOfExpertise?: string[],
+        about?: string
+    ) {
+        
+        const identity = await AllowedIdentity.findById(identityId);
+
+        if (!identity) {
+            throw new AppError("Allowed identity not found", 404);
+        }       
+        if (areaOfExpertise) {
+            identity.areaOfExpertise = areaOfExpertise;
+        }
+        if (about) {
+            identity.about = about;
+        }
+        if (areaOfExpertise && areaOfExpertise.length > 10) {
+            throw new AppError("Too many expertise areas", 400);
+        }
+
+        if (about && about.length > 500) {
+            throw new AppError("About section too long", 400);
+        }
+        await identity.save();
+
+        await AuditLog.create({
+            actorId: adminId,
+            action: "UPDATE_ALLOWED_IDENTITY_PROFILE",
+            actorRole: adminRole,
+            targetType: "AllowedIdentity",
+            targetId: identity._id.toString(),
+            metadata: {
+                identifier: identity.identifier,
+                role: identity.role,
+                updatedFields: {
+                    areaOfExpertise,
+                    about,
+                },
+            },
+        }); 
 
         return identity;
     }

@@ -6,6 +6,8 @@ export interface IAllowedIdentity extends Document {
 
     isActive: boolean;
     fullName?:string | undefined;
+    areaOfExpertise?: string[];
+    about?: string;
 
     addedBy?: mongoose.Types.ObjectId;
 
@@ -35,6 +37,16 @@ const allowedIdentitySchema = new Schema<IAllowedIdentity>(
         fullName:{
             type:String
         },
+        areaOfExpertise: {
+            type: [String],
+            default: [],
+        },
+
+        about: {
+            type: String,
+            default: "",
+        },
+
         addedBy: {
             type: Schema.Types.ObjectId,
             ref: "User",
@@ -46,10 +58,10 @@ const allowedIdentitySchema = new Schema<IAllowedIdentity>(
 );
 
 
-allowedIdentitySchema.index(
-    { identifier: 1, role: 1 },
-    { unique: true }
-);
+// allowedIdentitySchema.index(
+//     { identifier: 1, role: 1 },
+//     { unique: true }
+// );
 
 export const AllowedIdentity = mongoose.model<IAllowedIdentity>(
     "AllowedIdentity",
