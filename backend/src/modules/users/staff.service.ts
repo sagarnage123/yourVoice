@@ -2,10 +2,13 @@ import { User } from "./user.model";
 
 export const StaffService = {
     async listStaff() {
-        return User.find({
+        const data=await User.find({
             role: { $in: ["Academician", "counsellor"] },
         })
-            .select("name fullName role rating profileImage")
+            .select("name fullName about areaOfExpertise role rating profileImage")
             .lean();
+            
+       
+        return data;
     },
 };

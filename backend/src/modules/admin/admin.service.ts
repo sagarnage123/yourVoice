@@ -84,7 +84,7 @@ export class AdminService {
             throw new AppError("About section too long", 400);
         }
         await identity.save();
-
+       
         await AuditLog.create({
             actorId: adminId,
             action: "UPDATE_ALLOWED_IDENTITY_PROFILE",

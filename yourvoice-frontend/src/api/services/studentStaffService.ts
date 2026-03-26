@@ -11,6 +11,8 @@ export interface StaffProfile {
     id: string;
     name:string | "staff";
     fullName:string;
+    about:string;
+    areaOfExpertise:string[];
     role: StaffRole;
     rating: StaffRating;
     profileImage:string;
@@ -25,7 +27,7 @@ export interface GetStaffProfilesResponse {
 export const studentStaffService = {
     async getStaffProfiles(): Promise<StaffProfile[]> {
         const res = await apiClient.get<GetStaffProfilesResponse>("api/staff/");
-        
+      
         return res.data.data;
     },
 };

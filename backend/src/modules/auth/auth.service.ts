@@ -158,6 +158,13 @@ export class AuthService {
             });
         
         }
+        else{
+            user.lastLoginAt = new Date();
+            user.about=allowedIdentity.about ??"not provided";
+            user.areaOfExpertise=allowedIdentity.areaOfExpertise??["not provided"];
+            user.fullName=allowedIdentity.fullName?? "not provided";
+            await user.save();
+        }
         
         const jwtToken = signToken({
             userId: user._id.toString(),
@@ -166,6 +173,7 @@ export class AuthService {
         if(process.env.NODE_ENV === "development"){
             console.log(`Generated JWT for user ${user._id.toString()} with role ${user.role} is ${jwtToken}`);
         }
+        
         return {
             token: jwtToken,
             id: user._id.toString(),

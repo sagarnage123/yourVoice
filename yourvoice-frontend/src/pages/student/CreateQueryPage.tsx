@@ -18,48 +18,171 @@ function Header() {
         </div>
     );
 }
+// function StaffPreview({ staff }: { staff: StaffProfile }) {
+//     return (
+//         <div
+//             className="
+//         mt-6 rounded-2xl bg-white
+//         border border-slate-100 shadow-sm
+//         p-6
+//       "
+//         >
+//             <div
+//                 className="
+//           flex items-start gap-5
+//         "
+//             >
+              
+//                 <div className="shrink-0">
+//                     <Avatar image={staff.profileImage} />
+//                 </div>
+
+              
+//                 <div className="min-w-0 flex-1">
+//                     <div className="text-lg font-medium text-slate-900 wrap-break-word">
+//                         {staff.fullName}
+//                     </div>
+
+//                     <div className="mt-0.5 text-sm text-slate-500 capitalize">
+//                         {staff.role}
+//                     </div>
+//                     <div className="mb-4">
+//                         <h3 className="text-sm font-medium text-gray-700">About</h3>
+//                         <p className="text-gray-600 text-sm mt-1">
+//                             {staff.about || "No description provided"}
+//                         </p>
+//                     </div>
+
+                   
+//                     <div>
+//                         <h3 className="text-sm font-medium text-gray-700 mb-2">
+//                             Areas of Expertise
+//                         </h3>
+
+//                         <div className="flex flex-wrap gap-2">
+//                             {staff.areaOfExpertise?.length ? (
+//                                 staff.areaOfExpertise.map((item: string, index: number) => (
+//                                     <span
+//                                         key={index}
+//                                         className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded-full"
+//                                     >
+//                                         {item}
+//                                     </span>
+//                                 ))
+//                             ) : (
+//                                 <span className="text-gray-400 text-sm">
+//                                     Not specified
+//                                 </span>
+//                             )}
+//                         </div>
+//                     </div>
+
+//                     {staff.rating.count > 0 && (
+//                         <div className="mt-1 text-sm text-slate-500">
+//                             ⭐ {staff.rating.average.toFixed(1)} ·{" "}
+//                             {staff.rating.count} reviews
+//                         </div>
+//                     )}
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
+
 function StaffPreview({ staff }: { staff: StaffProfile }) {
     return (
         <div
             className="
-        mt-6 rounded-2xl bg-white
-        border border-slate-100 shadow-sm
-        p-6
-      "
+                mt-6 rounded-2xl bg-white
+                border border-slate-100
+                shadow-sm hover:shadow-md
+                transition-shadow duration-300
+                p-6
+            "
         >
-            <div
-                className="
-          flex items-start gap-5
-        "
-            >
-              
+            <div className="flex items-start gap-5">
+
+                
                 <div className="shrink-0">
-                    <Avatar image={staff.profileImage} />
+                    <div className="relative">
+                        <Avatar image={staff.profileImage} />
+                        <div className="absolute -inset-1 rounded-full bg-slate-100 -z-10" />
+                    </div>
                 </div>
 
-              
+               
                 <div className="min-w-0 flex-1">
-                    <div className="text-lg font-medium text-slate-900 wrap-break-word">
-                        {staff.fullName}
+
+                   
+                    <div>
+                        <h2 className="text-xl font-semibold text-slate-900 leading-tight">
+                            {staff.fullName}
+                        </h2>
+
+                        <p className="mt-1 text-sm text-slate-500 capitalize">
+                            {staff.role}
+                        </p>
                     </div>
 
-                    <div className="mt-0.5 text-sm text-slate-500 capitalize">
-                        {staff.role}
-                    </div>
-
+                   
                     {staff.rating.count > 0 && (
-                        <div className="mt-1 text-sm text-slate-500">
+                        <div className="mt-2 text-sm text-slate-500">
                             ⭐ {staff.rating.average.toFixed(1)} ·{" "}
                             {staff.rating.count} reviews
                         </div>
                     )}
+
+                    
+                    <div className="mt-4 h-px bg-slate-100" />
+
+                    
+                    <div className="mt-4">
+                        <h3 className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+                            About
+                        </h3>
+
+                        <p className="mt-2 text-sm text-slate-600 italic leading-relaxed">
+                            {staff.about?.trim()
+                                ? staff.about
+                                : "No description provided"}
+                        </p>
+                    </div>
+
+                   
+                    <div className="mt-5">
+                        <h3 className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">
+                            Areas of Expertise
+                        </h3>
+
+                        {staff.areaOfExpertise?.length ? (
+                            <div className="flex flex-wrap gap-2">
+                                {staff.areaOfExpertise.map((item, index) => (
+                                    <span
+                                        key={index}
+                                        className="
+                                            px-3 py-1 text-xs
+                                            bg-slate-50 text-slate-600
+                                            border border-slate-100
+                                            rounded-full
+                                            hover:bg-slate-100
+                                            transition
+                                        "
+                                    >
+                                        {item}
+                                    </span>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-sm text-slate-600 italic">
+                                No expertise listed
+                            </p>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
-
-
 function Avatar({ image }: { image?: string }) {
     return (
         <img

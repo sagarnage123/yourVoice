@@ -14,6 +14,55 @@ function Header() {
         </div>
     );
 }
+// function StaffCard({
+//     staff,
+//     onClick,
+// }: {
+//     staff: StaffProfile;
+//     onClick: () => void;
+// }) {
+//     return (
+//         <button
+//             onClick={onClick}
+//             className="
+//         group w-full text-left rounded-2xl p-5
+//         bg-white/80 backdrop-blur
+//         border border-slate-100
+//         shadow-sm
+//         hover:shadow-lg hover:-translate-y-0.5
+//         transition-all duration-200
+//       "
+//         >
+//             <div className="flex items-center gap-4">
+//                 <Avatar role={staff.role} />
+
+//                 <div className="flex-1">
+//                     <div className="flex items-center justify-between">
+//                         <h3 className="text-base font-medium text-slate-900">
+//                             {staff.name === "staff"
+//                                 ? staff.role === "Academician"
+//                                     ? "Academician"
+//                                     : "counsellor"
+//                                 : staff.name}
+//                         </h3>
+//                         <h3 className="text-base font-medium text-slate-900">
+//                             {staff.fullName}
+//                         </h3>
+
+//                         <RoleBadge role={staff.role} />
+//                     </div>
+
+//                     {staff.rating.count > 0 && (
+//                         <div className="mt-1 text-sm text-slate-500">
+//                             ⭐ {staff.rating.average.toFixed(1)} ·{" "}
+//                             {staff.rating.count} reviews
+//                         </div>
+//                     )}
+//                 </div>
+//             </div>
+//         </button>
+//     );
+// }
 function StaffCard({
     staff,
     onClick,
@@ -25,40 +74,79 @@ function StaffCard({
         <button
             onClick={onClick}
             className="
-        group w-full text-left rounded-2xl p-5
-        bg-white/80 backdrop-blur
-        border border-slate-100
-        shadow-sm
-        hover:shadow-lg hover:-translate-y-0.5
-        transition-all duration-200
-      "
+                group w-full text-left rounded-2xl p-6
+                bg-white border border-slate-100
+                shadow-sm
+                hover:shadow-xl hover:-translate-y-1
+                hover:border-slate-200
+                transition-all duration-300
+                min-h-50 flex flex-col
+            "
         >
+           
             <div className="flex items-center gap-4">
                 <Avatar role={staff.role} />
 
                 <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                        <h3 className="text-base font-medium text-slate-900">
-                            {staff.name === "staff"
-                                ? staff.role === "Academician"
-                                    ? "Academician"
-                                    : "counsellor"
-                                : staff.name}
-                        </h3>
-                        <h3 className="text-base font-medium text-slate-900">
-                            {staff.fullName}
-                        </h3>
+                    <h3 className="text-lg font-semibold text-slate-900 leading-tight">
+                        {staff.fullName}
+                    </h3>
 
+                    <div className="flex items-center gap-2 mt-1">
                         <RoleBadge role={staff.role} />
-                    </div>
 
-                    {staff.rating.count > 0 && (
-                        <div className="mt-1 text-sm text-slate-500">
-                            ⭐ {staff.rating.average.toFixed(1)} ·{" "}
-                            {staff.rating.count} reviews
-                        </div>
-                    )}
+                        {staff.rating.count > 0 && (
+                            <span className="text-xs text-slate-500">
+                                ⭐ {staff.rating.average.toFixed(1)}
+                            </span>
+                        )}
+                    </div>
                 </div>
+            </div>
+
+           
+            <div className="mt-4 h-px bg-slate-100" />
+
+            
+            <div className="mt-4">
+                <p className="text-sm text-slate-600 leading-relaxed line-clamp-2 italic">
+                    {staff.about?.trim()
+                        ? staff.about
+                        : "No description provided"}
+                </p>
+            </div>
+
+           
+            <div className="flex-1" />
+
+           
+            <div className="mt-4">
+                {staff.areaOfExpertise?.length ? (
+                    <div className="flex flex-wrap gap-2">
+                        {staff.areaOfExpertise.slice(0, 2).map((item, i) => (
+                            <span
+                                key={i}
+                                className="
+                                    text-xs px-3 py-1 rounded-full
+                                    bg-slate-50 text-slate-600
+                                    border border-slate-100
+                                "
+                            >
+                                {item}
+                            </span>
+                        ))}
+
+                        {staff.areaOfExpertise.length > 2 && (
+                            <span className="text-xs text-slate-500 italic">
+                                +{staff.areaOfExpertise.length - 2} more
+                            </span>
+                        )}
+                    </div>
+                ) : (
+                    <p className="text-xs text-slate-600 italic">
+                        No expertise listed
+                    </p>
+                )}
             </div>
         </button>
     );
