@@ -39,7 +39,9 @@ export const adminService = {
     async addAllowedIdentity(payload: {
         identifier: string;
         role: AllowedIdentityRole;
-        fullName:string | undefined
+        fullName:string | undefined;
+        about:string | undefined;
+        areaOfExpertise:string[] | undefined;
     }): Promise<AllowedIdentity> {
         const res = await apiClient.post("/api/admin/allowed-identities", payload);
         return res.data.data;

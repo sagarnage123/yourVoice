@@ -18,6 +18,9 @@ export function AllowedIdentitiesPage() {
     const [identifier, setIdentifier] = useState("");
     const [role, setRole] = useState<AllowedIdentityRole>("student");
     const [fullName, setFullName] = useState("");
+    const [about, setAbout] = useState("");
+    const [expertise, setExpertise] = useState<string[]>([]);
+    const [expertiseInput, setExpertiseInput] = useState("");
 
     const [submitting, setSubmitting] = useState(false);
 
@@ -45,6 +48,16 @@ export function AllowedIdentitiesPage() {
                     role === "Academician" || role === "counsellor"
                         ? fullName.trim()
                         : undefined,
+
+                about:
+                    role === "Academician" || role === "counsellor"
+                        ? about.trim()
+                        : undefined,
+
+                areaOfExpertise:
+                    role === "Academician" || role === "counsellor"
+                        ? expertise
+                        : undefined,
             });
 
             toast.success("Identity added successfully");
@@ -55,6 +68,10 @@ export function AllowedIdentitiesPage() {
                 toast.error("Failed to add identity");
             }
         } finally {
+            setIdentifier("");
+            setFullName("");
+            setAbout("");
+            setExpertise([]);
             setSubmitting(false);
         }
     }
@@ -133,8 +150,11 @@ export function AllowedIdentitiesPage() {
                                 ))}
                             </select>
                         </div>
-
+                   
                         {(role === "Academician" || role === "counsellor") && (
+
+                            <>
+                            
                             <div className="space-y-1 animate-fadeIn">
                                 <label className="text-xs text-text-muted">
                                     Official full name
@@ -151,6 +171,100 @@ export function AllowedIdentitiesPage() {
           "
                                 />
                             </div>
+                            <div className="space-y-1 animate-fadeIn">
+                                <label className="text-xs text-text-muted">
+                                    About
+                                </label>
+
+                                <textarea
+                                    value={about}
+                                    onChange={(e) => setAbout(e.target.value)}
+                                    placeholder="Write a short description..."
+                                    className="
+          w-full rounded-lg
+          border border-slate-200
+          px-3 py-2.5 text-sm
+          focus:outline-none focus:ring-2 focus:ring-indigo-200
+        "
+                                    rows={4}
+                                />
+                            </div>
+
+                            <div className="space-y-1 animate-fadeIn">
+                                <label className="text-xs text-text-muted">
+                                    Areas of Expertise
+                                </label>
+
+                                {/* Input Row */}
+                                <div className="flex gap-2">
+                                    <input
+                                        value={expertiseInput}
+                                        onChange={(e) => setExpertiseInput(e.target.value)}
+                                        placeholder="e.g. AI"
+                                        className="
+        flex-1 rounded-lg
+        border border-slate-300
+        px-3 py-2 text-sm
+        focus:outline-none focus:ring-2 focus:ring-indigo-200
+      "
+                                    />
+
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const value = expertiseInput.trim();
+
+                                            if (!value) return;
+
+                                            if (expertise.includes(value)) return;
+
+                                            setExpertise([...expertise, value]);
+                                            setExpertiseInput("");
+                                        }}
+                                        className="
+        px-3 py-2 text-sm
+        bg-slate-900 text-white
+        rounded-lg
+        hover:bg-slate-800
+        transition
+      "
+                                    >
+                                        Add
+                                    </button>
+                                </div>
+
+                                {/* Tags */}
+                                <div className="flex flex-wrap gap-2 mt-2">
+                                    {expertise.length > 0 ? (
+                                        expertise.map((item, index) => (
+                                            <span
+                                                key={index}
+                                                className="
+            px-3 py-1 text-xs
+            bg-slate-100 text-slate-700
+            rounded-full flex items-center gap-2
+          "
+                                            >
+                                                {item}
+                                                <button
+                                                    onClick={() =>
+                                                        setExpertise(expertise.filter((_, i) => i !== index))
+                                                    }
+                                                    className="text-slate-400 hover:text-red-500"
+                                                >
+                                                    ×
+                                                </button>
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <span className="text-xs text-slate-400 italic">
+                                            No expertise added yet
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        </>
+
                         )}
                     </div>
 
