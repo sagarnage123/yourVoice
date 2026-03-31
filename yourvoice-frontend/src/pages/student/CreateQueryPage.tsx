@@ -116,7 +116,7 @@ function StaffPreview({ staff }: { staff: StaffProfile }) {
                    
                     <div>
                         <h2 className="text-xl font-semibold text-slate-900 leading-tight">
-                            {staff.fullName}
+                            {staff.name}
                         </h2>
 
                         <p className="mt-1 text-sm text-slate-500 capitalize">

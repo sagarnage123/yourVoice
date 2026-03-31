@@ -89,7 +89,7 @@ function StaffCard({
 
                 <div className="flex-1">
                     <h3 className="text-lg font-semibold text-slate-900 leading-tight">
-                        {staff.fullName}
+                        {staff.name}
                     </h3>
 
                     <div className="flex items-center gap-2 mt-1">
