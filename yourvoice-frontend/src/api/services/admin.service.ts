@@ -10,6 +10,9 @@ export interface AllowedIdentity {
     _id: string;
     identifier: string;
     role: AllowedIdentityRole;
+    fullName?: string;
+    about?: string;
+    areaOfExpertise?: string[];
     isActive: boolean;
     createdAt: string;
 }
@@ -49,6 +52,18 @@ export const adminService = {
 
     async listAllowedIdentities(): Promise<AllowedIdentity[]> {
         const res = await apiClient.get("/api/admin/allowed-identities");
+        return res.data.data;
+    },
+
+    async updateAllowedIdentityProfile(
+        id: string,
+        payload: {
+            fullName?: string;
+            about?: string;
+            areaOfExpertise?: string[];
+        }
+    ): Promise<AllowedIdentity> {
+        const res = await apiClient.patch(`/api/admin/allowed-identities/${id}/profile`, payload);
         return res.data.data;
     },
 

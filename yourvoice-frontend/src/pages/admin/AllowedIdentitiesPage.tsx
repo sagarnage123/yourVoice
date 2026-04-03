@@ -12,6 +12,7 @@ const ROLE_OPTIONS: AllowedIdentityRole[] = [
     "counsellor",
     "admin",
 ];
+import { useLocation } from "react-router-dom";
 
 export function AllowedIdentitiesPage() {
     
@@ -24,6 +25,26 @@ export function AllowedIdentitiesPage() {
 
     const [submitting, setSubmitting] = useState(false);
 
+    const location = useLocation();
+    
+    const [editingIdentity, setEditingIdentity] = useState<AllowedIdentity | null>(null);
+    useEffect(() => {
+        if (location.state?.identity) {
+            setEditingIdentity(location.state.identity);
+        }
+
+    }, [location.state]);
+
+    useEffect(() => {
+        if (editingIdentity) {
+            setIdentifier(editingIdentity.identifier || "");
+            setRole(editingIdentity.role);
+
+            setFullName(editingIdentity.fullName || "");
+            setAbout(editingIdentity.about || "");
+            setExpertise(editingIdentity.areaOfExpertise || []);
+        }
+    }, [editingIdentity]);
 
     async function handleAdd() {
         if (!identifier.trim()) {
@@ -40,6 +61,32 @@ export function AllowedIdentitiesPage() {
 
 
         try {
+            if(editingIdentity){
+                await adminService.updateAllowedIdentityProfile(
+                    editingIdentity._id,
+                    {
+                        fullName:
+                            role === "Academician" || role === "counsellor"
+                                ? fullName.trim()
+                                : undefined,
+                        about:
+                            role === "Academician" || role === "counsellor"
+                                ? about.trim()
+                                : undefined,
+
+                        areaOfExpertise:
+                            role === "Academician" || role === "counsellor"
+                                ? expertise
+                                : undefined,
+                    }
+                );
+                
+                toast.success("Identity updated successfully");
+
+            }
+            else{
+
+           
             setSubmitting(true);
             await adminService.addAllowedIdentity({
                 identifier: identifier.trim(),
@@ -61,6 +108,7 @@ export function AllowedIdentitiesPage() {
             });
 
             toast.success("Identity added successfully");
+        }
         } catch (err: any) {
             if (err?.response?.status === 409) {
                 toast.error("Identity already exists");
@@ -104,7 +152,7 @@ export function AllowedIdentitiesPage() {
                 <div className="rounded-xl border border-slate-200 bg-bg-surface p-5 shadow-sm space-y-5">
                     <div className="space-y-1">
                         <h2 className="text-sm font-medium text-text-secondary">
-                            Add Allowed Identity
+                            {editingIdentity ? "Edit Allowed Identity" : "Add Allowed Identity"}
                         </h2>
                         <p className="text-xs text-text-muted">
                             Pre-approve a faculty or counsellor before OTP login
@@ -195,7 +243,7 @@ export function AllowedIdentitiesPage() {
                                     Areas of Expertise
                                 </label>
 
-                                {/* Input Row */}
+                              
                                 <div className="flex gap-2">
                                     <input
                                         value={expertiseInput}
@@ -233,7 +281,7 @@ export function AllowedIdentitiesPage() {
                                     </button>
                                 </div>
 
-                                {/* Tags */}
+                               
                                 <div className="flex flex-wrap gap-2 mt-2">
                                     {expertise.length > 0 ? (
                                         expertise.map((item, index) => (
@@ -268,7 +316,7 @@ export function AllowedIdentitiesPage() {
                         )}
                     </div>
 
-                    {/* Action */}
+                  
                     <div className="flex justify-end pt-2">
                         <button
                             onClick={handleAdd}
@@ -291,8 +339,34 @@ export function AllowedIdentitiesPage() {
                             <span className="group-hover:translate-x-0.5 transition-transform">
                                 +
                             </span>
-                            Add identity
+                            {editingIdentity ? "Update Identity" : "Add Identity"}
                         </button>
+                    {editingIdentity && (
+                        <button
+                            onClick={() => {
+                                setIdentifier("");
+                                setFullName("");
+                                setAbout("");
+                                setExpertise([]);
+                                setRole("student");
+                                setEditingIdentity(null);
+                                window.history.replaceState({}, document.title);
+                            }}
+                            className="group
+  inline-flex items-center gap-2
+  rounded-full
+  bg-linear-to-r from-indigo-500 to-violet-500
+  px-5 py-2.5
+  text-sm font-medium text-white
+  hover:from-indigo-600 hover:to-violet-600
+  active:scale-95
+  transition-all duration-200
+  shadow-sm
+  disabled:opacity-50"
+                        >
+                            Cancel Edit
+                        </button>
+                    )}
                     </div>
                 </div>
         </div>
