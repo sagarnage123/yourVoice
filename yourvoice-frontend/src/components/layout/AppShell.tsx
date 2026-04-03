@@ -94,6 +94,7 @@ export function AppShell({ children }: AppShellProps) {
                                 <NavItem to="/admin" label="Identities" />
                                 <NavItem to="/admin/flagged-queries" label="Flagged" />
                                 <NavItem to="/admin/audit-logs" label="Logs" />
+                                <NavItem to="/admin/allowed-identities/all" label="Allowed Identities" />
                             </>
                         )}
                     </div>
