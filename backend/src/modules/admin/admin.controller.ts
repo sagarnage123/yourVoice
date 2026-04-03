@@ -46,7 +46,7 @@ export const updateAllowedIdentityProfile = asyncHandler(
 
         const { fullName, areaOfExpertise, about } = req.body;
         const { userId ,role:adminRole} = req.user!;
-
+        
         if (
             areaOfExpertise !== undefined &&
             !Array.isArray(areaOfExpertise)

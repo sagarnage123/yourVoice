@@ -18,7 +18,7 @@ router.post("/allowed-identities", addAllowedIdentity);
 
 
 router.patch(
-    "/allowed-identity/:identityId/profile",
+    "/allowed-identities/:identityId/profile",
     updateAllowedIdentityProfile
 );
 

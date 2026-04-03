@@ -73,6 +73,9 @@ export class AdminService {
         if (areaOfExpertise) {
             identity.areaOfExpertise = areaOfExpertise;
         }
+        if(fullName){
+            identity.fullName = fullName;
+        }
         if (about) {
             identity.about = about;
         }
