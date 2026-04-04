@@ -11,6 +11,10 @@ export const apiClient = axios.create({
         "Content-Type": "application/json",
     },
 });
+
+if (process.env.NODE_ENV === "production") {
+    apiClient.defaults.baseURL = "https://yourvoice-backend.onrender.com";
+}
 // https://yourvoice-backend.onrender.com
 
 apiClient.interceptors.request.use((config) => {

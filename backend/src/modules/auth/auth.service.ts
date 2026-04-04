@@ -23,7 +23,6 @@ export class AuthService {
         });
        
         if (!allowed) {
-            console.log(`Unauthorized OTP request for ${normalizedIdentifier} with role ${role}`);
             throw new AppError("Access not allowed", 403);
         }
         
@@ -51,6 +50,7 @@ export class AuthService {
             tokenHash,
             expiresAt,
         });
+        
         if(process.env.NODE_ENV === "development"){
             console.log(`Generated OTP for ${normalizedIdentifier} with role ${role} is ${otp}`);
         }

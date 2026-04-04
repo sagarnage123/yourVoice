@@ -12,7 +12,9 @@ const PORT = process.env.PORT || 5000;
 const startServer = async () => {
     try {
         await connectDB();
-
+        if(process.env.NODE_ENV === "development"){
+            console.log("Connected to MongoDB in development environment");
+        }
         app.listen(PORT, () => {
             console.log(`🚀 Server running on port ${PORT}`);
         });
