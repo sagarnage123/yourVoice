@@ -58,10 +58,10 @@ const allowedIdentitySchema = new Schema<IAllowedIdentity>(
 );
 
 
-// allowedIdentitySchema.index(
-//     { identifier: 1, role: 1 },
-//     { unique: true }
-// );
+allowedIdentitySchema.index(
+    { identifier: 1, role: 1 },
+    { unique: true }
+);
 
 export const AllowedIdentity = mongoose.model<IAllowedIdentity>(
     "AllowedIdentity",
