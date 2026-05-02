@@ -15,6 +15,7 @@ export class AuthService {
         identifier: string,
         role: "student" | "Academician" | "counsellor" | "admin"
     ) {
+        
         const normalizedIdentifier = identifier.toLowerCase();
 
         const allowed = await AllowedIdentity.findOne({
@@ -25,7 +26,6 @@ export class AuthService {
         if (!allowed) {
             throw new AppError("Access not allowed", 403);
         }
-        
         
         await AuthToken.updateMany(
             {

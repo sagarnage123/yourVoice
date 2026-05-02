@@ -5,7 +5,9 @@ import { sendResponse } from "../../utils/apiResponse";
 
 export const requestAuth = asyncHandler(
     async (req: Request, res: Response) => {
+        
         const { identifier, role } = req.body;
+        
 
         const result = await AuthService.requestAuthToken(
             identifier,
