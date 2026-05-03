@@ -8,8 +8,10 @@
       "DOM.Iterable",
       "ESNext"
     ],
+    "types": ["node"],
     "jsx": "react-jsx",
     "baseUrl": "./src",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": [
         "*"

@@ -12,9 +12,10 @@ export const apiClient = axios.create({
     },
 });
 
-if (process.env.NODE_ENV === "production") {
-    apiClient.defaults.baseURL = "https://yourvoice-backend.onrender.com";
-}
+// if (process.env.NODE_ENV === "production") {
+//     apiClient.defaults.baseURL = "https://yourvoice-backend.onrender.com";
+// }
+// else apiClient.defaults.baseURL = "http://localhost:5000";
 // https://yourvoice-backend.onrender.com
 
 apiClient.interceptors.request.use((config) => {

@@ -59,15 +59,10 @@ const authTokenSchema = new Schema<IAuthToken>(
 );
 
 
-// authTokenSchema.index(
-//     { expiresAt: 1 },
-//     { expireAfterSeconds: 0 }
-// );
-
-// authTokenSchema.index(
-//     { identifier: 1, role: 1, used: 1 },
-//     { name: "identifier_role_used_idx" }
-// );
+authTokenSchema.index(
+    { identifier: 1, role: 1, used: 1 },
+    { name: "identifier_role_used_idx" }
+);
 
 authTokenSchema.statics.hashToken = function (token: string) {
     return crypto.createHash("sha256").update(token).digest("hex");

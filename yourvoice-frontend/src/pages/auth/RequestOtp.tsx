@@ -25,9 +25,9 @@ export function RequestOtp() {
         try {
             setLoading(true);
             setError(null);
-
+           
             await authService.requestAuth({ identifier, role });
-
+            
             navigate("/auth/verify", {
                 state: { identifier, role },
             });
