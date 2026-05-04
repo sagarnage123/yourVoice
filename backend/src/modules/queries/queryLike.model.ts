@@ -24,10 +24,10 @@ const QueryLikeSchema = new Schema<IQueryLike>(
     { timestamps: { createdAt: true, updatedAt: false } }
 );
 
-// QueryLikeSchema.index(
-//     { queryId: 1, userId: 1 },
-//     { unique: true }
-// );
+QueryLikeSchema.index(
+    { queryId: 1, userId: 1 },
+    { unique: true }
+);
 
 export const QueryLikeModel = mongoose.model<IQueryLike>(
     "QueryLike",
