@@ -118,21 +118,21 @@ const userSchema = new Schema<IUser>(
         timestamps: true,
     }
 );
-// userSchema.index(
-//     { phone: 1, role: 1 },
-//     {
-//         unique: true,
-//         sparse: true,
-//     }
-// );
+userSchema.index(
+    { phone: 1, role: 1 },
+    {
+        unique: true,
+        sparse: true,
+    }
+);
 
-// userSchema.index(
-//     { email: 1, role: 1 },
-//     {
-//         unique: true,
-//         sparse: true,
-//     }
-// );
+userSchema.index(
+    { email: 1, role: 1 },
+    {
+        unique: true,
+        sparse: true,
+    }
+);
 userSchema.pre<IUser>("save", async function () {
     if (this.role === "student") {
         this.fullName = undefined;
