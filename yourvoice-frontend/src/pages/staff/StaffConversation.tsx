@@ -25,6 +25,7 @@ export function StaffConversation() {
         );
         
         if (!reason || !reason.trim() || reason.trim().length<10) {
+            toast.error("Flag reason must be at least 10 characters long");
             return;
         }
 
