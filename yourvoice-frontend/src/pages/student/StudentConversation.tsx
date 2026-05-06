@@ -3,12 +3,26 @@ import { ChatTimeline } from "@/components/chat/ChatTimeline";
 import { MessageComposer } from "@/components/chat/MessageComposer";
 import { queryChatService } from "@/api/services/queryChat.service";
 import { useQueryThread } from "@/hook/useQueryThread";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { studentQueriesService } from "@/api/services/studentQueries.service";
 import { RateStaffCard } from "@/components/ratings/RateStaffCard";
 export function StudentConversation() {
     const { queryId } = useParams<{ queryId: string }>();
+
+    useEffect(() => {
+        const checkIfRated = async () => {
+            if (!queryId) return;   
+            try {
+                await studentQueriesService.checkIfRated(queryId as string);
+                setShowRating(true);
+            } catch {
+                setShowRating(false);
+            }
+        };
+
+        checkIfRated();
+    }, [queryId]);
 
     if (!queryId) {
         return null;
