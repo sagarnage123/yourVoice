@@ -4,7 +4,7 @@ import { requireRole } from "../../middlewares/requireRole";
 import { createQuery } from "./query.controller";
 import { getQueryThread } from "./query.controller";
 import { flagQuery } from "./queryFlag.controller";
-import { rateQueryController } from "./queryRating.controller";
+import { rateQueryController ,checkIfRatedController} from "./queryRating.controller";
 const router = Router();
 
 router.post(
@@ -30,6 +30,11 @@ router.post(
     "/:queryId/rate",
     requireAuth,
     rateQueryController
+);
+router.get(
+    "/:queryId/rated",
+    requireAuth,
+    checkIfRatedController
 );
 
 export default router;

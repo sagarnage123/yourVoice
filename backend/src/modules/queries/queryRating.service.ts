@@ -47,3 +47,14 @@ export async function rateQuery(
   
     await staff.save();
 }
+
+export async function checkIfRated(
+    queryId: string,
+    studentId: string
+) {
+    const rating = await QueryRating.findOne({ queryId, studentId });
+    if (!rating) {
+        return null;
+    }   
+    return rating;
+}
