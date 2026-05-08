@@ -14,8 +14,8 @@ export function StudentConversation() {
         const checkIfRated = async () => {
             if (!queryId) return;   
             try {
-                await studentQueriesService.checkIfRated(queryId as string);
-                setShowRating(true);
+                const res=await studentQueriesService.checkIfRated(queryId as string);
+                setShowRating(!res);
             } catch {
                 setShowRating(false);
             }

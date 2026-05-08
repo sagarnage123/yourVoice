@@ -37,6 +37,7 @@ export const studentQueriesService = {
     ,   
     async checkIfRated(queryId: string) {
         const res = await apiClient.get(`/api/queries/${queryId}/rated`);
+        
         return res.data.data;
     }
 };
