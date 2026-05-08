@@ -5,7 +5,7 @@ import { normalizeAxiosError } from "./normalizeError";
 import { authToken } from "./authToken";
 
 export const apiClient = axios.create({
-    baseURL: "http://localhost:5000/",
+    baseURL: "https://yourvoice-backend.onrender.com",
     timeout: 15000,
     headers: {
         "Content-Type": "application/json",
