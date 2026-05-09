@@ -8,6 +8,13 @@ interface MessageComposerProps {
 export function MessageComposer({ onSend }: MessageComposerProps) {
     const [message, setMessage] = useState("");
     const [sending, setSending] = useState(false);
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            console.log("Enter pressed",e);
+            e.preventDefault();
+            handleSend();
+        }
+    };
 
     async function handleSend() {
         if (!message.trim()) return;
@@ -21,6 +28,7 @@ export function MessageComposer({ onSend }: MessageComposerProps) {
         }
     }
 
+
     return (
         <div className="flex items-center gap-2 border-t border-slate-200 bg-bg-surface p-3">
             <input
@@ -29,6 +37,7 @@ export function MessageComposer({ onSend }: MessageComposerProps) {
                 placeholder="Write your message…"
                 className="flex-1 rounded-full border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary/30"
                 disabled={sending}
+                onKeyDown={handleKeyDown}
             />
             <Button loading={sending} onClick={handleSend}>
                 Send
