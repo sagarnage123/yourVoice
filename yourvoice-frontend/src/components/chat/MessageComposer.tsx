@@ -8,9 +8,10 @@ interface MessageComposerProps {
 export function MessageComposer({ onSend }: MessageComposerProps) {
     const [message, setMessage] = useState("");
     const [sending, setSending] = useState(false);
+
     const handleKeyDown = (e: React.KeyboardEvent) => {
+        
         if (e.key === "Enter" && !e.shiftKey) {
-            console.log("Enter pressed",e);
             e.preventDefault();
             handleSend();
         }
