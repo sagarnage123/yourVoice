@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 function Header() {
     return (
         <div>
-            <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
                 Allowed Identities
             </h1>
             <p className="mt-1 text-sm text-slate-500">
@@ -26,7 +26,7 @@ function IdentityCard({
     return (
         <div
             className="
-        group rounded-2xl p-5
+        group rounded-2xl p-4 sm:p-5
         bg-white border border-slate-100
         shadow-sm hover:shadow-lg
         hover:-translate-y-1
@@ -37,7 +37,7 @@ function IdentityCard({
            
             <div className="flex items-center justify-between">
                 <div>
-                    <h3 className="text-base font-semibold text-slate-900">
+                    <h3 className="wrap-break-words text-base font-semibold text-slate-900">
                         {item.fullName || "Unnamed"}
                     </h3>
                     <p className="text-xs text-slate-500 capitalize">
@@ -58,7 +58,7 @@ function IdentityCard({
             </div>
 
            
-            <p className="mt-4 text-sm text-slate-600 italic line-clamp-2">
+            <p className="mt-4 text-sm text-slate-600 italic line-clamp-3 wrap-break-words">
                 {item.about || "No description provided"}
             </p>
 
@@ -132,7 +132,7 @@ export function AllAllowedIdentitiesPage() {
         <div className="page-enter max-w-6xl mx-auto px-4 py-8">
             <Header />
 
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {data.map((item) => (
                     <IdentityCard key={item._id} item={item} onEdit={(identity) => {
                         navigate("/admin/", {

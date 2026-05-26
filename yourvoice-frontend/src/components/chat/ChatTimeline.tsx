@@ -9,7 +9,7 @@ interface ChatTimelineProps {
 
 export function ChatTimeline({ messages, queryId, query }: ChatTimelineProps) {
     return (
-        <div className="flex flex-col gap-3 overflow-y-auto px-2 py-4">
+        <div className="flex min-w-0 flex-col gap-2.5 sm:gap-3 px-1 sm:px-2 py-3 sm:py-4">
             {query && <MessageBubble key={queryId} message={query.content} sender={"student"} timestamp={new Date(query.createdAt).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",

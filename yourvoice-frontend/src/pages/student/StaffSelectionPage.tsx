@@ -14,55 +14,7 @@ function Header() {
         </div>
     );
 }
-// function StaffCard({
-//     staff,
-//     onClick,
-// }: {
-//     staff: StaffProfile;
-//     onClick: () => void;
-// }) {
-//     return (
-//         <button
-//             onClick={onClick}
-//             className="
-//         group w-full text-left rounded-2xl p-5
-//         bg-white/80 backdrop-blur
-//         border border-slate-100
-//         shadow-sm
-//         hover:shadow-lg hover:-translate-y-0.5
-//         transition-all duration-200
-//       "
-//         >
-//             <div className="flex items-center gap-4">
-//                 <Avatar role={staff.role} />
 
-//                 <div className="flex-1">
-//                     <div className="flex items-center justify-between">
-//                         <h3 className="text-base font-medium text-slate-900">
-//                             {staff.name === "staff"
-//                                 ? staff.role === "Academician"
-//                                     ? "Academician"
-//                                     : "counsellor"
-//                                 : staff.name}
-//                         </h3>
-//                         <h3 className="text-base font-medium text-slate-900">
-//                             {staff.fullName}
-//                         </h3>
-
-//                         <RoleBadge role={staff.role} />
-//                     </div>
-
-//                     {staff.rating.count > 0 && (
-//                         <div className="mt-1 text-sm text-slate-500">
-//                             ⭐ {staff.rating.average.toFixed(1)} ·{" "}
-//                             {staff.rating.count} reviews
-//                         </div>
-//                     )}
-//                 </div>
-//             </div>
-//         </button>
-//     );
-// }
 function StaffCard({
     staff,
     onClick,
@@ -74,10 +26,10 @@ function StaffCard({
         <button
             onClick={onClick}
             className="
-                group w-full text-left rounded-2xl p-6
+                group w-full text-left rounded-2xl p-4 sm:p-6
                 bg-white border border-slate-100
                 shadow-sm
-                hover:shadow-xl hover:-translate-y-1
+                sm:hover:shadow-xl sm:hover:-translate-y-1
                 hover:border-slate-200
                 transition-all duration-300
                 min-h-50 flex flex-col
@@ -88,7 +40,7 @@ function StaffCard({
                 <Avatar role={staff.role} />
 
                 <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-slate-900 leading-tight">
+                    <h3 className="wrap-words-break text-lg font-semibold text-slate-900 leading-tight">
                         {staff.name}
                     </h3>
 
@@ -109,7 +61,7 @@ function StaffCard({
 
             
             <div className="mt-4">
-                <p className="text-sm text-slate-600 leading-relaxed line-clamp-2 italic">
+                <p className="text-sm text-slate-600 leading-relaxed line-clamp-3 wrap-words-break italic">
                     {staff.about?.trim()
                         ? staff.about
                         : "No description provided"}
@@ -160,7 +112,7 @@ function Avatar({ role }: { role: "Academician" | "counsellor" }) {
     return (
         <div
             className={`
-        h-12 w-12 rounded-full
+        h-10 w-10 sm:h-12 sm:w-12 rounded-full
         flex items-center justify-center
         font-semibold text-sm
         ${styles}
@@ -190,12 +142,12 @@ function RoleBadge({ role }: { role: "Academician" | "counsellor" }) {
 }
 function StaffSelectionSkeleton() {
     return (
-        <div className="min-h-screen bg-slate-50">
-            <div className="max-w-6xl mx-auto px-4 py-8">
+        <div className="min-h-full bg-slate-50">
+            <div className="max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
                 <div className="h-7 w-64 bg-slate-200 rounded mb-2 animate-pulse" />
                 <div className="h-4 w-80 bg-slate-100 rounded animate-pulse" />
 
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {Array.from({ length: 6 }).map((_, i) => (
                         <div
                             key={i}
@@ -234,12 +186,12 @@ export default function StaffSelectionPage() {
     if (error) return <ErrorState message={error} />;
 
     return (
-        <div className="page-enter min-h-screen bg-linear-to-b from-slate-50 to-white">
+        <div className="page-enter min-h-full bg-linear-to-b from-slate-50 to-white">
 
-            <div className="max-w-6xl mx-auto px-4 py-8">
+            <div className="max-w-6xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
                 <Header />
 
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {staff.map((member) => (
                         <StaffCard
                             key={member.id}

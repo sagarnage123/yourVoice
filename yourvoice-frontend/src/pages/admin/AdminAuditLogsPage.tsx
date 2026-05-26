@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { format } from "date-fns";
+
 import { adminService } from "@/api/services/admin.service";
 
 const { fetchAuditLogs } = adminService;
@@ -48,10 +48,10 @@ export default function AdminAuditLogsPage() {
 
     return (
       
-        <div className="p-6 space-y-6">
+        <div className="space-y-6 p-4 sm:p-6">
             
             <div>
-                <h1 className="text-xl font-semibold text-gray-900">
+                <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
                     Audit Logs
                 </h1>
                 <p className="text-sm text-gray-500">
@@ -59,7 +59,7 @@ export default function AdminAuditLogsPage() {
                 </p>
             </div>
 
-            <div className="bg-white border border-gray-200 rounded-xl shadow-sm">
+            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
                 {loading ? (
                     <div className="p-6 text-sm text-gray-500">
                         Loading audit logs…
@@ -69,7 +69,7 @@ export default function AdminAuditLogsPage() {
                         No audit logs found.
                     </div>
                 ) : (
-                    <table className="w-full text-sm">
+                        <table className="hidden md:table w-full text-sm">
                         <thead className="bg-gray-50 border-b border-gray-200">
                             <tr className="text-left text-gray-600">
                                 <th className="px-4 py-3">Time</th>
@@ -118,6 +118,95 @@ export default function AdminAuditLogsPage() {
                         </tbody>
                     </table>
                 )}
+                </div>
+            <div className="space-y-3 p-2 sm:p-3 md:hidden">
+                    {logs.map((log) => (
+                        <div
+                            key={log.id}
+                            className="
+            rounded-xl
+            border border-gray-200
+            bg-white
+           p-3.5 sm:p-4
+            w-full
+            shadow-sm
+            space-y-3
+            "
+                        >
+                            <div className="flex items-start justify-between gap-2 min-w-0">
+                                <div className="min-w-0 flex-1">
+                                    <div className="text-sm font-semibold text-gray-900">
+                                        {log.action}
+                                    </div>
+
+                                    <div className="text-xs text-gray-500 mt-1">
+                                        {new Date(log.createdAt).toLocaleString()}
+                                    </div>
+                                </div>
+
+                                <div
+                                    className="
+                    rounded-full
+                    bg-slate-100
+                    px-2 py-1
+                    text-[10px]
+                    font-medium
+                    capitalize
+                    text-slate-600
+                    shrink-0
+                    "
+                                >
+                                    {log.actor.role}
+                                </div>
+                            </div>
+
+                            <div className="space-y-2 text-sm">
+                                <div className="min-w-0">
+                                    <div className="text-xs uppercase tracking-wide text-gray-400">
+                                        Actor
+                                    </div>
+
+                                    <div className="font-mono text-xs break-all text-gray-700">
+                                        {log.actor.id}
+                                    </div>
+                                </div>
+
+                                <div className="min-w-0">
+                                    <div className="text-xs uppercase tracking-wide text-gray-400">
+                                        Target
+                                    </div>
+
+                                    <div className="wrap-break-words text-gray-800">
+                                        {log.target}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div className="text-xs uppercase tracking-wide text-gray-400">
+                                        Metadata
+                                    </div>
+
+                                    {Object.keys(log.metadata).length > 0 ? (
+                                        <pre
+                                            className="
+                            mt-1
+                            overflow-x-auto
+                            rounded-lg
+                            bg-gray-50
+                            p-3
+                            text-[11px]
+                            text-gray-700
+                            "
+                                        >
+                                            {JSON.stringify(log.metadata, null, 2)}
+                                        </pre>
+                                    ) : (
+                                        <div className="text-gray-500">—</div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
             </div>
         </div>
     );

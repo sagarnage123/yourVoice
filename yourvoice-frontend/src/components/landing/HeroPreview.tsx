@@ -9,9 +9,12 @@ const HeroPreview = () => {
             bg-white
             shadow-xl
             overflow-hidden
+            hover:shadow-2xl
+            hover:scale-[1.02]
+            transition-transform
+            duration-300
         ">
-
-            
+    
             <div className="
                 flex
                 items-center
@@ -103,7 +106,7 @@ const HeroPreview = () => {
 
                         <div>
                             <p className="text-sm font-medium text-slate-900">
-                                Moderation Queue
+                                Integrity and Responsibility
                             </p>
 
                             <p className="text-xs text-slate-500 mt-1">

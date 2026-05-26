@@ -35,7 +35,7 @@ export function FlaggedQueriesPage() {
                         No flagged queries.
                     </div>
                 ) : (
-                            <ul className="space-y-3 p-4">
+                            <ul className="space-y-3 p-4 sm:p-5">
                                 {data.map((q) => (
                                     <li
                                         key={q._id}
@@ -49,16 +49,16 @@ export function FlaggedQueriesPage() {
   bg-bg-surface
   p-4
   transition-all duration-200 ease-out
-  hover:scale-[1.01]
+  sm:hover:scale-[1.01]
   hover:border-indigo-300
   hover:bg-indigo-50/40
   hover:shadow-lg
   active:scale-[0.99]
 "
                                     >
-                                        <div className="flex items-start justify-between gap-4">
-                                            <div className="space-y-1">
-                                                <div className="text-sm font-medium text-text-primary">
+                                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                                            <div className="min-w-0 space-y-1">
+                                                <div className="text-sm font-medium text-text-primary wrap-break-words">
                                                     {q.flagReason || "No reason provided"}
                                                 </div>
                                                 <div className="text-xs text-text-muted">
@@ -70,9 +70,10 @@ export function FlaggedQueriesPage() {
                                             <div
                                                 className="
             text-indigo-500
-            opacity-0
+            opacity-0 translate-x-1
             group-hover:opacity-100
-            transition-opacity
+            group-hover:translate-x-0
+            transition-all duration-200
             text-sm
           "
                                             >

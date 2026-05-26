@@ -11,32 +11,33 @@ export function QueryRow({ query, onClick }: QueryRowProps) {
         <button
             onClick={onClick}
             className={cn(
-                "flex w-full items-start gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-left",
-                "hover:border-slate-300 hover:bg-slate-50 transition"
+                "flex w-full items-start gap-3 rounded-xl border border-slate-200 bg-white px-3 sm:px-4 py-3 text-left",
+                "hover:border-slate-300 hover:bg-slate-50 transition-colors duration-200"
             )}
         >
             <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-sm font-medium text-brand-primary">
                 S
             </div>
-            {query.isFlagged && (
-                <span
-                    className="
-            ml-2 inline-flex items-center
+            
+
+            <div className="flex-1 space-y-1 min-w-0">
+                <div className="flex flex-col items-start gap-1 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="line-clamp-2 wrap-break-words text-sm text-text-secondary text-text-primary">
+                        {query.subject ?? "Anonymous query"}
+                    </p>
+                    {query.isFlagged && (
+                        <span
+                            className="
+            self-center sm:self-start inline-flex items-center
             rounded-full px-2 py-0.5
             text-xs font-medium
             bg-rose-50 text-rose-600
         "
-                >
-                    Flagged
-                </span>
-            )}
+                        >
+                            Flagged
+                        </span>
+                    )}
 
-
-            <div className="flex-1 space-y-1 min-w-0">
-                <div className="flex items-center justify-between gap-2">
-                    <p className="truncate text-sm font-medium text-text-primary">
-                        {query.subject ?? "Anonymous query"}
-                    </p>
                     <span className="shrink-0 text-xs text-text-muted">
                         {new Date(query.lastMessageAt).toLocaleDateString()}
                     </span>

@@ -58,12 +58,12 @@ export function StudentConversation() {
 
 
     return (
-        <div className="page-enter flex h-[calc(100vh-180px)] flex-col rounded-xl bg-bg-surface border border-slate-200 shadow-sm">
+        <div className="page-enter flex h-[calc(100vh-120px)] sm:h-[calc(100vh-180px)] flex-col rounded-xl bg-bg-surface border border-slate-200 shadow-sm">
            
-            <div className="flex-1 overflow-y-auto px-3 py-4 scrollbar-hide">
+            <div className=" flex-1 overflow-y-auto px-2 sm:px-3 py-3 sm:py-4 scrollbar-hide">
 
                 {loading ? (
-                    <div className="flex h-full items-center justify-center text-sm text-text-muted">
+                    <div className="flex h-full items-center justify-center trounded-xl bg-slate-50 px-4 py-3 text-sm text-text-muted">
                         Loading conversation…
                     </div>
                 ) : (
@@ -81,7 +81,7 @@ export function StudentConversation() {
             </div>
 
             {showRating && (
-                <div className="border-t border-slate-200 bg-bg-surface px-3 py-4">
+                <div className="border-t border-slate-200 bg-bg-surface px-2 sm:px-3 py-3 sm:py-4">
                     <RateStaffCard onRate={handleRate} />
                 </div>
             )}

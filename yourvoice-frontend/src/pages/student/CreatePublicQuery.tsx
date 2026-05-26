@@ -28,7 +28,7 @@ export function CreatePublicQuery() {
 
     return (
         <div className="page-enter mx-auto max-w-3xl space-y-6">
-            <h1 className="text-lg font-semibold text-text-secondary">
+            <h1 className="text-lg sm:text-xl font-semibold text-text-secondary">
                 Ask a public question
             </h1>
 
@@ -37,7 +37,7 @@ export function CreatePublicQuery() {
                     rounded-xl
                     border border-slate-200
                     bg-bg-surface
-                    p-6
+                    p-4 sm:p-6
                     space-y-4
                     shadow-sm
                     transition-all duration-200 ease-out
@@ -48,7 +48,7 @@ export function CreatePublicQuery() {
                 <textarea
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    rows={5}
+                    rows={6}
                     placeholder="Ask your question openly so others can benefit…"
                     className="
                         w-full
@@ -58,13 +58,18 @@ export function CreatePublicQuery() {
                         px-3 py-2.5
                         text-sm
                         leading-relaxed
+                        min-h-35
+                        wrap-break-word
                         focus:outline-none
                         focus:ring-2
                         focus:ring-indigo-200
                     "
                 />
+                <div className="flex justify-end text-xs text-text-muted">
+                    {content.length}/500
+                </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-stretch sm:justify-end">
                     <button
                         onClick={handleSubmit}
                         disabled={submitting}
@@ -73,10 +78,11 @@ export function CreatePublicQuery() {
                             bg-linear-to-r from-indigo-500 to-violet-500
                             px-5 py-2.5
                             text-sm font-medium text-white
-                            hover:from-indigo-600 hover:to-violet-600
+                            sm:hover:from-indigo-600 sm:hover:to-violet-600
                             active:scale-95
                             transition-all duration-200
                             disabled:opacity-50
+                            w-full sm:w-auto
                         "
                     >
                         Post question

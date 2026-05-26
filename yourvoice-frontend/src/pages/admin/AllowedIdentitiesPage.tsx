@@ -317,7 +317,7 @@ export function AllowedIdentitiesPage() {
                     </div>
 
                   
-                    <div className="flex justify-end pt-2">
+                    <div className="flex justify-between pt-2">
                         <button
                             onClick={handleAdd}
                             disabled={submitting}

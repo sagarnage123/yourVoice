@@ -46,7 +46,7 @@ export function FlaggedQueryDetails() {
                 onClick={() => navigate("/admin/flagged-queries")}
                 className="
         inline-flex items-center gap-1.5
-        text-xs font-medium
+        text-xs sm:text-sm font-medium py-1
         text-indigo-600
         hover:text-indigo-700
         transition-colors
@@ -61,11 +61,11 @@ export function FlaggedQueryDetails() {
         rounded-xl
         border border-slate-200
         bg-bg-surface
-        p-6
+        p-4 sm:p-6
         space-y-5
         shadow-sm
         transition-all duration-200 ease-out
-        hover:scale-[1.01]
+        sm:hover:scale-[1.01]
         hover:border-indigo-300
         hover:bg-indigo-50/40
         hover:shadow-lg
@@ -73,18 +73,18 @@ export function FlaggedQueryDetails() {
             >
 
 
-                <h1 className="text-sm font-medium text-text-secondary">
+                <h1 className="text-sm sm:text-base font-medium text-text-secondary">
                     Flagged Query Details
                 </h1>
 
-                <div className="space-y-4 text-sm">
+                <div className="min-w-0 space-y-4 text-sm">
 
                     <div>
                         <span className="text-xs text-text-muted uppercase tracking-wide">
                             Flag reason
                         </span>
 
-                        <div className="font-medium">
+                        <div className="font-medium wrap-break-words">
                             {query.flagReason || "—"}
                         </div>
                     </div>
@@ -94,7 +94,7 @@ export function FlaggedQueryDetails() {
                             Student identifier
                         </span>
 
-                        <div className="font-medium">
+                        <div className="font-medium wrap-break-words">
                             {student.email || student.phone}
                         </div>
                     </div>

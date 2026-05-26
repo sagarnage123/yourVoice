@@ -22,7 +22,7 @@ export function MessageComposer({ onSend }: MessageComposerProps) {
 
         try {
             setSending(true);
-            await onSend(message);
+            await onSend(message.trim());
             setMessage("");
         } finally {
             setSending(false);
@@ -31,16 +31,27 @@ export function MessageComposer({ onSend }: MessageComposerProps) {
 
 
     return (
-        <div className="flex items-center gap-2 border-t border-slate-200 bg-bg-surface p-3">
-            <input
+        <div className="flex items-end gap-2 border-t border-slate-200 bg-bg-surface p-2 sm:p-3">
+            <textarea
+                rows={1}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Write your message…"
-                className="flex-1 rounded-full border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex-1 resize-none rounded-2xl border border-slate-200
+px-4 py-2.5 text-sm
+leading-relaxed
+min-h-11
+max-h-32
+overflow-y-auto
+focus:outline-none
+focus:ring-2 focus:ring-blue-200
+disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={sending}
                 onKeyDown={handleKeyDown}
             />
-            <Button loading={sending} onClick={handleSend}>
+            <Button 
+                className="shrink-0 self-end"
+            loading={sending} onClick={handleSend}>
                 Send
             </Button>
         </div>

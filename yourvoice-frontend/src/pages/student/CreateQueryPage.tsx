@@ -9,7 +9,7 @@ import { studentQueriesService } from "@/api/services/studentQueries.service";
 function Header() {
     return (
         <div>
-            <h1 className="text-2xl font-semibold text-slate-900">
+            <h1 className="text-xl sm:text-2xl font-semibold text-slate-900">
                 Create new query
             </h1>
             <p className="mt-1 text-slate-500">
@@ -97,10 +97,10 @@ function StaffPreview({ staff }: { staff: StaffProfile }) {
                 border border-slate-100
                 shadow-sm hover:shadow-md
                 transition-shadow duration-300
-                p-6
+                p-4 sm:p-6
             "
         >
-            <div className="flex items-start gap-5">
+            <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-5">
 
                 
                 <div className="shrink-0">
@@ -115,7 +115,7 @@ function StaffPreview({ staff }: { staff: StaffProfile }) {
 
                    
                     <div>
-                        <h2 className="text-xl font-semibold text-slate-900 leading-tight">
+                        <h2 className="text-lg sm:text-xl font-semibold text-slate-900 leading-tight">
                             {staff.name}
                         </h2>
 
@@ -141,7 +141,7 @@ function StaffPreview({ staff }: { staff: StaffProfile }) {
                             About
                         </h3>
 
-                        <p className="mt-2 text-sm text-slate-600 italic leading-relaxed">
+                        <p className="mt-2 wrap-words-break text-sm text-slate-600 italic leading-relaxed">
                             {staff.about?.trim()
                                 ? staff.about
                                 : "No description provided"}
@@ -160,7 +160,7 @@ function StaffPreview({ staff }: { staff: StaffProfile }) {
                                     <span
                                         key={index}
                                         className="
-                                            px-3 py-1 text-xs
+                                            px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs
                                             bg-slate-50 text-slate-600
                                             border border-slate-100
                                             rounded-full
@@ -267,9 +267,9 @@ export default function CreateQueryPage() {
     if (!staff) return null;
 
     return (
-        <div className="page-enter min-h-screen bg-linear-to-b from-slate-50 to-white">
+        <div className="page-enter min-h-full bg-linear-to-b from-slate-50 to-white">
 
-            <div className="max-w-3xl mx-auto px-4 py-8">
+            <div className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
                 <Header />
 
                 <StaffPreview staff={staff} />
@@ -281,15 +281,19 @@ export default function CreateQueryPage() {
                         placeholder="Describe your concern or question…"
                         rows={5}
                         className="
-              w-full rounded-xl border border-slate-200
-              p-4 text-slate-900 placeholder-slate-400
-              focus:outline-none focus:ring-2 focus:ring-indigo-200
-              resize-none
+              w-full rounded-2xl border border-slate-200
+p-4 text-sm text-slate-900 placeholder-slate-400
+leading-relaxed
+focus:outline-none focus:ring-2 focus:ring-indigo-200
+resize-none
+min-h-35
+wrap-words-break
+
             "
                     />
                 </div>
 
-                <div className="mt-4 flex justify-end">
+                <div className="mt-4 flex justify-stretch sm:justify-end">
                     <button
                         onClick={handleSubmit}
                         disabled={!message.trim() || submitting}
@@ -299,6 +303,7 @@ export default function CreateQueryPage() {
               hover:bg-indigo-700
               disabled:opacity-50 disabled:cursor-not-allowed
               transition
+              w-full sm:w-auto
             "
                     >
                         {submitting ? "Starting…" : "Start conversation"}

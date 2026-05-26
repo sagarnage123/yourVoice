@@ -41,7 +41,7 @@ export function RequestOtp() {
 
     return (
       
-            <div className="space-y-7">
+        <div className="page-enter space-y-7">
                 <div className="space-y-1 text-center">
                     <h1 className="text-2xl font-semibold text-slate-900">
                         Welcome to yourVoice

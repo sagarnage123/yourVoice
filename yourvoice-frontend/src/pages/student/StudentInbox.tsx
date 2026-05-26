@@ -23,8 +23,8 @@ export function StudentInbox() {
     return (
         <div className="page-enter mx-auto max-w-3xl space-y-3">
 
-            <div className="flex items-center justify-between">
-                <h1 className="text-base font-medium text-text-secondary">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h1 className="text-base sm:text-lg font-medium text-text-secondary">
                     Your conversations
                 </h1>
 
@@ -34,6 +34,7 @@ export function StudentInbox() {
         group
         rounded-full
         px-4 py-2.5
+        w-full sm:w-auto justify-center
         text-sm font-medium
         text-indigo-600
         bg-indigo-100
@@ -50,14 +51,14 @@ export function StudentInbox() {
                 </button>
             </div>
 
-            <div className="space-y-1 max-h-[calc(100vh-180px)] overflow-y-auto pr-1 scrollbar-hide">
+            <div className="space-y-1 pb-2 max-h-[calc(100vh-220px)] sm:max-h-[calc(100vh-180px)] overflow-y-auto pr-1 scrollbar-hide">
 
                 {loading ? (
-                    <div className="p-6 text-sm text-text-muted">
+                    <div className="rounded-xl border border-slate-200 bg-bg-surface p-6 text-sm text-text-muted">
                         Loading your conversations…
                     </div>
                 ) : queries.length === 0 ? (
-                    <div className="p-6 text-sm text-text-muted">
+                    <div className="rounded-xl border border-slate-200 bg-bg-surface p-6 text-sm text-text-muted">
                         You haven’t started a conversation yet.
                     </div>
                 ) : (

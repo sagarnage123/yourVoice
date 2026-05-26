@@ -19,14 +19,12 @@ import { CreatePublicQuery } from "@/pages/student/CreatePublicQuery";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 import  AdminAuditLogsPage  from "@/pages/admin/AdminAuditLogsPage";
 import LandingPage from "@/pages/landing/LandingPage";
-import DemoAccessPage from "@/pages/landing/DemoAccessPage";
+
 
 export function AppRoutes() {
     return (
         <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/demo-access" element={<DemoAccessPage />} />
-
             
             <Route path="/auth" element={<AuthLayout />}>
                 <Route index element={<RequestOtp />} />

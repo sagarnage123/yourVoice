@@ -1,4 +1,6 @@
+import {useNavigate} from "react-router-dom";
 const Navbar = () => {
+    const navigate = useNavigate();
     return (
         <header className="
             sticky
@@ -105,8 +107,28 @@ hover:shadow-sm
                         >
                             Architecture
                         </a>
+                        <button
+                            onClick={() => navigate("/auth")}
+                            className="
+                                    rounded-lg
+                                px-4
+                                py-2
+                                text-sm
+                                font-medium
+                                text-slate-600
+                                transition-all
+                                duration-200
+                                hover:bg-white
+                                hover:text-slate-900
+                                
+                                hover:shadow-sm
+                                "
+                        >
+                            Login Page
+                        </button>
 
                     </nav>
+
 
                     <a
                         href="#demo"

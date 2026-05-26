@@ -44,7 +44,7 @@ export function PublicQueries() {
 
     return (
         <div className="page-enter mx-auto max-w-3xl space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <h1 className="text-lg font-semibold text-text-secondary">
                     Public Questions
                 </h1>
@@ -63,6 +63,8 @@ export function PublicQueries() {
       hover:bg-indigo-200
       hover:shadow-sm
       active:scale-95
+      sm:w-auto
+      justify-center
     "
                 >
                     <span
@@ -83,7 +85,7 @@ export function PublicQueries() {
                     Loading public feed…
                 </div>
             ) : (
-                    <div className="max-h-[calc(100vh-180px)] overflow-y-auto pr-1 scrollbar-hide space-y-4">
+                    <div className="max-h-[calc(100vh-220px)] sm:max-h-[calc(100vh-180px)] overflow-y-auto pr-1 scrollbar-hide space-y-4 pb-2">
                     {queries.map((q) => (
                         <div
                             key={q.id}
@@ -91,20 +93,21 @@ export function PublicQueries() {
                 rounded-xl
                 border border-slate-200
                 bg-bg-surface
-                p-5
+                p-4 sm:p-5
                 space-y-3
                 transition-all duration-200 ease-out
-                hover:scale-[1.01]
+                sm:hover:scale-[1.01]
                 hover:border-indigo-300
                 hover:bg-indigo-50/40
                 hover:shadow-lg
               "
                         >
-                            <p className="text-sm leading-relaxed text-text-primary">
+                            <p className="wrap-break-word text-sm leading-relaxed text-text-primary">
                                 {q.content}
                             </p>
 
-                            <div className="flex items-center justify-between text-xs text-text-muted">
+                            <div className="flex items-center justify-between
+                            gap-3 text-xs text-text-muted">
                                 <button
                                     onClick={() => toggleAgree(q)}
                                     className="

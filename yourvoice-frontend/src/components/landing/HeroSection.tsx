@@ -1,5 +1,7 @@
 import HeroPreview from "./HeroPreview";
+import {useNavigate} from "react-router-dom";
 const HeroSection = () => {
+    const navigate = useNavigate();
     return (
         <section className="relative py-16 sm:py-20 lg:py-28">
 
@@ -79,8 +81,8 @@ const HeroSection = () => {
                             lg:justify-start
                         ">
 
-                            <a
-                                href="#demo"
+                            <button
+                                onClick={() => navigate("/auth")}
                                 className="
                                 w-full
                                 sm:w-auto
@@ -95,8 +97,8 @@ const HeroSection = () => {
                                 hover:bg-slate-800
                             "
                             >
-                                View Demo
-                            </a>
+                                Login Page
+                            </button>
 
                             <a
                                 href="#architecture"
