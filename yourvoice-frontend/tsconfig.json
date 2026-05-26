@@ -10,12 +10,8 @@
     ],
     "types": ["node"],
     "jsx": "react-jsx",
-    "baseUrl": "./src",
-    "ignoreDeprecations": "6.0",
     "paths": {
-      "@/*": [
-        "*"
-      ]
+      "@/*": ["./src/*"]
     },
     "strict": true,
     "skipLibCheck": true,
