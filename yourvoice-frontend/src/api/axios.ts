@@ -5,18 +5,13 @@ import { normalizeAxiosError } from "./normalizeError";
 import { authToken } from "./authToken";
 
 export const apiClient = axios.create({
-    baseURL: "https://yourvoice-backend.onrender.com",
+    baseURL: import.meta.env.API_BASE_URL || "http://localhost:5000/",
     timeout: 15000,
     headers: {
         "Content-Type": "application/json",
     },
 });
 
-// if (process.env.NODE_ENV === "production") {
-//     apiClient.defaults.baseURL = "https://yourvoice-backend.onrender.com";
-// }
-// else apiClient.defaults.baseURL = "http://localhost:5000";
-// https://yourvoice-backend.onrender.com
 
 apiClient.interceptors.request.use((config) => {
     const token = authToken.get();
