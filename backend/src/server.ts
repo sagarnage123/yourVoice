@@ -4,9 +4,6 @@ dotenv.config();
 import app from "./app";
 import { connectDB } from "./config/db";
 
-
-
-
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
@@ -21,7 +18,7 @@ const startServer = async () => {
 
     } catch (error) {
         console.error("❌ Server failed to start");
-       
+        console.error(error);
         process.exit(1);
     }
 };
