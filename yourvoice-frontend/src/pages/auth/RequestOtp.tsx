@@ -96,7 +96,7 @@ export function RequestOtp() {
                 <Button
                 type="button"
                     onClick={async () => {
-                        console.log("Submitting with identifier:", identifier, "and role:", role);
+                        
                         await handleSubmit()}}
                     loading={loading}
                     className="
