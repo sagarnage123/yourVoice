@@ -67,6 +67,7 @@ export class AuthService {
             console.log(`Development mode: OTP for ${normalizedIdentifier} is ${otp}`);
         }
         else{
+            console.log(`Sending OTP email to ${recipientEmail} for identifier ${normalizedIdentifier} with role ${role}`);
             await sendOtpEmail({
                 to: recipientEmail,
                 otp,
