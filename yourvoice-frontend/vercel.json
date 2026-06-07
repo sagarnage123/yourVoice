@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/(.*)",
-            "destination": "/yourvoice-frontend/index.html"
+            "destination": "/index.html"
         }
     ]
 }
