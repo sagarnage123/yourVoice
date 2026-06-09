@@ -40,7 +40,6 @@ export const ReplyService = {
         }
 
         if (user.role === "admin") {
-            
             throw new AppError("Admins cannot participate in replies", 403);
         }
 
