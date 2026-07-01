@@ -13,7 +13,7 @@ const startServer = async () => {
             console.log("Connected to MongoDB in development environment");
         }
         app.listen(PORT, () => {
-            console.log(`🚀 Server running on port ${PORT} this change is for render`);
+            console.log(`🚀 Server running on port ${PORT}`);
         });
 
     } catch (error) {
