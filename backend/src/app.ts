@@ -17,6 +17,7 @@ import studentInboxRoutes from "./modules/queries/studentInbox.routes";
 
 import staffInboxRoutes from "./modules/queries/staffInbox.routes";
 
+import cors from "cors";
 
 import adminRoutes from "./modules/admin/admin.routes";
 
@@ -25,7 +26,6 @@ const app: Application = express();
 
 app.use(express.json());
 
-import cors from "cors";
 
 const allowedOrigins = [
     "https://yourvoice-zeta.vercel.app",
