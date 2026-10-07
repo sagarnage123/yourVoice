@@ -64,6 +64,7 @@ export class AuthService {
             : process.env.OTP_FALLBACK_EMAIL!;
            
         if (process.env.NODE_ENV === "development") {
+
             console.log(`Development mode: OTP for ${normalizedIdentifier} is ${otp}`);
         }
         else{
