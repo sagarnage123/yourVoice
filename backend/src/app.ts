@@ -23,7 +23,6 @@ import adminRoutes from "./modules/admin/admin.routes";
 
 const app: Application = express();
 
-
 app.use(express.json());
 
 
