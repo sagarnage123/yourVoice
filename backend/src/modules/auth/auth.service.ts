@@ -172,9 +172,7 @@ export class AuthService {
             userId: user._id.toString(),
             role: user.role,
         });
-        if(process.env.NODE_ENV === "development"){
-            console.log(`Generated JWT for user ${user._id.toString()} with role ${user.role} is ${jwtToken}`);
-        }
+
         
         return {
             token: jwtToken,
