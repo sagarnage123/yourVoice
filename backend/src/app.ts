@@ -1,5 +1,7 @@
 import express, { Application } from "express";
 import { globalErrorHandler } from "./middlewares/globalErrorHandler";
+import cookieParser from "cookie-parser";
+
 
 import healthRoutes from "./routes/health.routes";
 
@@ -20,30 +22,36 @@ import staffInboxRoutes from "./modules/queries/staffInbox.routes";
 import cors from "cors";
 
 import adminRoutes from "./modules/admin/admin.routes";
+import {validateOrigin} from "./middlewares/validateOrigin";
 
 const app: Application = express();
-
-app.use(express.json());
-
 
 const allowedOrigins = [
     "https://yourvoice-zeta.vercel.app",
     "http://localhost:5173",
 ];
 
-    cors ( {
+app.use(
+    cors({
         origin: (origin, callback) => {
-            if (!origin) return callback(null, true);
+            if (!origin || allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
 
-            if (allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-        }},
-        optionsSuccessStatus: 200,
+            return callback(new Error("Not allowed by CORS"));
+        },
         credentials: true,
-    } );           
-app.use(cors());
+        optionsSuccessStatus: 200,
+    })
+);
+
+
+
+app.use(express.json());
+app.use(cookieParser());
+
+app.use(validateOrigin);       
+
 
 app.use("/api/health", healthRoutes);
 
