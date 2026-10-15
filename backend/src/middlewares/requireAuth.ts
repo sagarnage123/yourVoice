@@ -7,13 +7,11 @@ export const requireAuth = (
     _res: Response,
     next: NextFunction
 ) => {
-    const authHeader = req.headers.authorization;
+    const token = req.cookies?.yourvoice_token;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!token || typeof token !== "string") {
         throw new AppError("Authentication required", 401);
     }
-
-    const token = authHeader.split(" ")[1];
 
     const decoded = verifyToken(token);
 
