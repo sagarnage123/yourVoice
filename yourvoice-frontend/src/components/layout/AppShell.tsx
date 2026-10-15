@@ -2,7 +2,7 @@
 import {Menu} from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import {  useState,useRef, type ReactNode, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {AnimatePresence , motion} from "framer-motion";
 interface AppShellProps {
     children: ReactNode;
@@ -34,6 +34,7 @@ export function AppShell({ children }: AppShellProps) {
     const { role, logout } = useAuth();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
    const btnRef = useRef<HTMLButtonElement | null>(null);
+   const navigate = useNavigate();
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -53,6 +54,12 @@ export function AppShell({ children }: AppShellProps) {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [mobileMenuOpen]);
+
+        async function handleLogout() {
+            setMobileMenuOpen(false);
+            await logout();
+            navigate("/auth", { replace: true });
+        }
     
     return (
         <div className="min-h-screen">
@@ -146,7 +153,7 @@ export function AppShell({ children }: AppShellProps) {
                     </button>
 
                     <button
-                        onClick={logout}
+                        onClick={handleLogout}
                         className="
                         hidden
                          md:block

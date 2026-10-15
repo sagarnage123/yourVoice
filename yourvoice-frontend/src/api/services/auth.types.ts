@@ -21,3 +21,11 @@ export interface VerifyAuthResponse {
         email?: string;
     };
 }
+
+
+export interface CurrentUserResponse {
+  user: {
+    id: string;
+    role: UserRole;
+  };
+}

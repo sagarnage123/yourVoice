@@ -7,8 +7,11 @@ import {
 } from "react";
 import type { ReactNode } from "react";
 import type { UserRole } from "../api/services/auth.types";
-import { authToken } from "../api/authToken";
+
 import { authRole } from "@/api/authRole";
+
+import { authService } from "@/api/services/auth.service";
+
 
 interface AuthState {
     isAuthenticated: boolean;
@@ -20,7 +23,7 @@ interface AuthState {
 
 interface AuthContextValue extends AuthState {
     login: (role: UserRole) => void;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -30,17 +33,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isInitializing, setIsInitializing] = useState(true)
 
     useEffect(() => {
-        const token = authToken.get();
-        const storedRole = authRole.get();
+    const restoreSession = async () => {
+      try {
+        const { user } = await authService.getCurrentUser();
 
-        if (token && storedRole) {
-            setRole(storedRole);
-        }
-
+        const userRole = user.role;
+        setRole(userRole);
+        authRole.set(userRole);
+      } catch {
+       
+        setRole(null);
+        authRole.clear();
+      } finally {
         setIsInitializing(false);
-    }, []);
-;
+      }
+    };
 
+    void restoreSession();
+  }, []);
 
     const value = useMemo<AuthContextValue>(() => {
         return {
@@ -51,8 +61,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 authRole.set(newRole);
                 setRole(newRole);
             },
-            logout: () => {
-                authToken.clear();
+            logout: async () => {
+                try {
+                    await authService.logout();
+                } catch (error) {
+                    console.error("Logout failed:", error);
+                }
+
                 authRole.clear();
                 setRole(null);
             },

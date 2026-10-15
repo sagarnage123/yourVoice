@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { useAuth } from "../context/AuthContext";
 import type { UserRole } from "../api/services/auth.types";
 
+
 interface ProtectedRouteProps {
     children: ReactNode;
     allowedRoles?: UserRole[];
@@ -14,9 +15,11 @@ export function ProtectedRoute({
 }: ProtectedRouteProps) {
     const { isAuthenticated, role, isInitializing } = useAuth();
 
-    if (isInitializing) {
-        return null; 
-    }
+   if (isInitializing) {
+    return <div 
+    className="flex items-center justify-center h-screen text-lg font-semibold text-gray-700">      
+    Loading session...</div>;
+}
 
 
    

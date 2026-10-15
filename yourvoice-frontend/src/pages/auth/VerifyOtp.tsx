@@ -9,8 +9,7 @@ import type { ApiError } from "@/api/error";
 import type { UserRole } from "@/api/services/auth.types";
 
 import { useAuth} from "@/context/AuthContext";
-import { authToken } from "@/api/authToken";
-import { authRole } from "@/api/authRole";
+
 
 interface LocationState {
     identifier: string;
@@ -50,9 +49,7 @@ export function VerifyOtp() {
                 role: state!.role,
             });
             login(result.user.role);
-            authToken.set(result.user.token);
-            authRole.set(result.user.role);
-            
+             
             if(result.user.role==="student" || result.user.role=="admin")
             navigate(`/${result.user.role}`);
             else navigate("/staff");

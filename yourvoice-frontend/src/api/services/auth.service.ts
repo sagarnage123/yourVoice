@@ -4,9 +4,9 @@ import type{
     RequestAuthPayload,
     VerifyAuthPayload,
     VerifyAuthResponse,
+    CurrentUserResponse
 } from "./auth.types";
-import { authToken } from "../authToken";
-import { authRole } from "../authRole";
+
 
 export const authService = {
     async requestAuth(payload: RequestAuthPayload): Promise<void> {
@@ -20,17 +20,19 @@ export const authService = {
         const response = await apiClient.post<
             ApiResponse<VerifyAuthResponse>
         >("/api/auth/verify", payload);
-
-        const { user } = response.data.data;
        
-        authToken.set(user.token);
-        authRole.set(user.role);
-
         return response.data.data;
     },
+    
+    async getCurrentUser(): Promise<CurrentUserResponse> {
+    const response = await apiClient.get<
+      ApiResponse<CurrentUserResponse>
+    >("/api/auth/me");
 
-    logout(): void {
-        authToken.clear();
-        authRole.clear();
+    return response.data.data;
+  },
+
+    async logout(): Promise<void> {
+        await apiClient.post("/api/auth/logout");
     },
 };
