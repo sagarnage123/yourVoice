@@ -18,8 +18,7 @@ export const requestAuth = asyncHandler(
             statusCode: 200,
             message: result.message,
             data: {
-                success: true,
-                otp: result.otp,
+                success: true
             },
         });
     }
