@@ -3,8 +3,11 @@ dotenv.config();
 
 import app from "./app";
 import { connectDB } from "./config/db";
+import { createServer } from "node:http";
+import { initializeWebSocketServer } from "./websocket/webServer";
 
 const PORT = process.env.PORT || 5000;
+const httpServer = createServer(app);
 
 const startServer = async () => {
     try {
@@ -12,7 +15,10 @@ const startServer = async () => {
         if(process.env.NODE_ENV === "development"){
             console.log("Connected to MongoDB in development environment");
         }
-        app.listen(PORT, () => {
+        
+        initializeWebSocketServer(httpServer);
+
+        httpServer.listen(PORT,() => {
             console.log(`🚀 Server running on port ${PORT}`);
         });
 
