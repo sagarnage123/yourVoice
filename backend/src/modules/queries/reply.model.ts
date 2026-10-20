@@ -6,11 +6,11 @@ export interface IReply extends Document {
     queryId: Types.ObjectId;
     senderRole: SenderRole;
 
-    // Internal only — NEVER exposed
     senderId: Types.ObjectId;
 
     content: string;
     createdAt: Date;
+    clientMessageId?: string; 
 }
 
 const ReplySchema = new Schema<IReply>(
@@ -40,8 +40,21 @@ const ReplySchema = new Schema<IReply>(
             trim: true,
             maxlength: 5000,
         },
+        clientMessageId: {
+            type: String,
+            trim: true,
+        },
     },
     { timestamps: { createdAt: true, updatedAt: false } }
+);
+ReplySchema.index(
+    { queryId: 1, senderId: 1, clientMessageId: 1 },
+    {
+        unique: true,
+        partialFilterExpression: {
+            clientMessageId: { $type: "string" },
+        },
+    }
 );
 
 export const ReplyModel = mongoose.model<IReply>(

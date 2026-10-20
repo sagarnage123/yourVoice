@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { asyncHandler } from "../../utils/asyncHandler";
 import { AuthService } from "./auth.service";
 import { sendResponse } from "../../utils/apiResponse";
+import { createHash } from "node:crypto";
+import { closeConnectionsForSession } from "../../websocket/connectionManager";
 
 export const requestAuth = asyncHandler(
     async (req: Request, res: Response) => {
@@ -60,6 +62,15 @@ export const verifyAuth = asyncHandler(
 
 export const logout = asyncHandler(
     async (_req: Request, res: Response) => {
+        const token = _req.cookies.yourvoice_token;
+             if (typeof token === "string" && token.length > 0) {
+            const sessionKey = createHash("sha256")
+                .update(token)
+                .digest("hex");
+
+            closeConnectionsForSession(sessionKey);
+        }
+
         res.clearCookie("yourvoice_token", {
             httpOnly: true,
             secure: true,

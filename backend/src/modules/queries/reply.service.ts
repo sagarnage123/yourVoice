@@ -4,6 +4,7 @@ import { AppError } from "../../errors/AppError";
 
 interface CreateReplyInput {
     content: string;
+    clientMessageId: string;
 }
 
 export const ReplyService = {
@@ -13,12 +14,13 @@ export const ReplyService = {
         user: { userId: string; role: string }
     ) {
         const query = await QueryModel.findById(queryId);
+        const { content, clientMessageId } = input;
 
         if (!query) {
             throw new AppError("Query not found", 404);
         }
 
-        
+
         if (query.type === "public") {
             throw new AppError(
                 "Replies are not supported for public queries yet",
@@ -26,29 +28,58 @@ export const ReplyService = {
             );
         }
 
-       
+
         if (user.role === "student") {
             if (query.createdBy.toString() !== user.userId) {
                 throw new AppError("Access denied", 403);
             }
-        }
-
-        if (user.role === "Academician" || user.role === "counsellor") {
+        } else if (
+            user.role === "Academician" ||
+            user.role === "counsellor"
+        ) {
             if (query.assignedTo?.toString() !== user.userId) {
                 throw new AppError("Access denied", 403);
             }
+        } else {
+            throw new AppError("Access denied", 403);
         }
 
-        if (user.role === "admin") {
-            throw new AppError("Admins cannot participate in replies", 403);
-        }
-
-        return ReplyModel.create({
+        const existingReply = await ReplyModel.findOne({
             queryId: query._id,
             senderId: user.userId,
-            senderRole: user.role === "student" ? "student" : "staff",
-            content: input.content,
+            clientMessageId,
         });
+
+        if (existingReply) {
+            return existingReply;
+        }
+
+        try {
+            return await ReplyModel.create({
+                queryId: query._id,
+                senderId: user.userId,
+                senderRole: user.role === "student" ? "student" : "staff",
+                clientMessageId,
+                content,
+            });
+        } catch (error: unknown) {
+            if (
+                typeof error === "object" &&
+                error !== null &&
+                "code" in error &&
+                error.code === 11000
+            ) {
+                const reply = await ReplyModel.findOne({
+                    queryId: query._id,
+                    senderId: user.userId,
+                    clientMessageId,
+                });
+
+                if (reply) return reply;
+            }
+
+            throw error;
+        }
     },
 
     async getReplies(
@@ -66,16 +97,15 @@ export const ReplyService = {
                 if (query.createdBy.toString() !== user.userId) {
                     throw new AppError("Access denied", 403);
                 }
-            }
-
-            if (user.role === "Academician" || user.role === "counsellor") {
+            } else if (
+                user.role === "Academician" ||
+                user.role === "counsellor"
+            ) {
                 if (query.assignedTo?.toString() !== user.userId) {
                     throw new AppError("Access denied", 403);
                 }
-            }
-
-            if (user.role === "admin") {
-                throw new AppError("Admins cannot view replies", 403);
+            } else {
+                throw new AppError("Access denied", 403);
             }
         }
 

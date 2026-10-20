@@ -49,7 +49,7 @@ export const QueryService = {
             });
         }
 
-        
+
         return QueryModel.create({
             type,
             content,
@@ -67,25 +67,21 @@ export const QueryService = {
             throw new AppError("Query not found", 404);
         }
 
-       
+
         if (query.type === "private") {
             if (user.role === "student") {
                 if (query.createdBy.toString() !== user.userId) {
                     throw new AppError("Access denied", 403);
                 }
-            }
-
-            if (user.role === "Academician" || user.role === "counsellor") {
+            } else if (
+                user.role === "Academician" ||
+                user.role === "counsellor"
+            ) {
                 if (query.assignedTo?.toString() !== user.userId) {
                     throw new AppError("Access denied", 403);
                 }
-            }
-
-            if (user.role === "admin") {
-                throw new AppError(
-                    "Admins cannot view private conversations",
-                    403
-                );
+            } else {
+                throw new AppError("Access denied", 403);
             }
         }
 
