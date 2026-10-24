@@ -43,6 +43,17 @@ export const ReplyService = {
         } else {
             throw new AppError("Access denied", 403);
         }
+        if (
+            typeof content !== "string" ||
+            !content.trim() ||
+            typeof clientMessageId !== "string" ||
+            !clientMessageId.trim()
+        ) {
+            throw new AppError(
+                "Valid content and clientMessageId are required",
+                400
+            );
+        }
 
         const existingReply = await ReplyModel.findOne({
             queryId: query._id,

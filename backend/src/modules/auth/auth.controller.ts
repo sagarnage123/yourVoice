@@ -10,7 +10,7 @@ export const requestAuth = asyncHandler(
         
         const { identifier, role } = req.body;
         
-
+        
         const result = await AuthService.requestAuthToken(
             identifier,
             role

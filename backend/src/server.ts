@@ -22,7 +22,7 @@ const startServer = async () => {
             console.log(`🚀 Server running on port ${PORT}`);
         });
 
-    } catch (error) {
+    } catch (error){
         console.error("❌ Server failed to start");
         console.error(error);
         process.exit(1);

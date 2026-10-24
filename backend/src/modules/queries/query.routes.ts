@@ -17,23 +17,27 @@ router.post(
 router.get(
     "/:queryId/thread",
     requireAuth,
+    requireRole("student", "Academician", "counsellor"),
     getQueryThread
 );
 
 router.post(
     "/:queryId/flag",
     requireAuth,
+    requireRole("Academician", "counsellor"),
     flagQuery
 );
 
 router.post(
     "/:queryId/rate",
     requireAuth,
+    requireRole("student"),
     rateQueryController
 );
 router.get(
     "/:queryId/rated",
     requireAuth,
+    requireRole("student", "Academician", "counsellor"),
     checkIfRatedController
 );
 

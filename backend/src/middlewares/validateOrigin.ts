@@ -20,7 +20,7 @@ export function validateOrigin(
 
   const origin = req.get("Origin");
 
-  if (!origin || !allowedOrigins.has(origin)) {
+  if (origin && !allowedOrigins.has(origin)) {
     throw new AppError("Invalid request origin", 403);
   }
 

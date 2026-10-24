@@ -16,6 +16,7 @@ export class AuthService {
         role: "student" | "Academician" | "counsellor" | "admin"
     ) {
         
+        
         const normalizedIdentifier = identifier.toLowerCase();
 
         const allowed = await AllowedIdentity.findOne({

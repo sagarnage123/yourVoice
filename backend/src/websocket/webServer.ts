@@ -72,9 +72,6 @@ export function initializeWebSocketServer(httpServer: Server) {
 
                 wss.emit("connection", ws, request);
 
-                console.log(
-                    `Authenticated WebSocket connection for user ${user.userId}`
-                );
             });
         } catch {
             rejectUpgrade(socket, 401, "Unauthorized");
