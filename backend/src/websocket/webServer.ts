@@ -5,14 +5,14 @@ import type { Duplex } from "node:stream";
 import cookie from "cookie";
 import { createHash } from "node:crypto";
 import { verifyToken } from "../utils/jwt";
-import { ReplyService } from "../modules/queries/reply.service";
-import { getConnectionsForUser } from "./connectionManager";
+
+import { handleWebSocketMessage } from "./messageHandler";
 import {
     registerConnection,
     removeConnection,
     getUserForConnection,
 } from "./connectionManager";
-import { AppError } from "../errors/AppError";
+
 
 const allowedOrigins = new Set([
     "https://yourvoice-zeta.vercel.app",
@@ -85,112 +85,14 @@ export function initializeWebSocketServer(httpServer: Server) {
         console.log("WebSocket client connected");
 
         ws.on("message", async (data) => {
-
             const user = getUserForConnection(ws);
+
             if (!user) {
                 ws.close(1008, "Unauthenticated connection");
                 return;
             }
 
-
-            let message: unknown;
-            try {
-                message = JSON.parse(data.toString());
-            } catch {
-                ws.send(JSON.stringify({
-                    type: "ERROR",
-                    message: "Invalid JSON",
-                }));
-                return;
-            }
-
-
-
-            if (
-                typeof message !== "object" ||
-                message === null ||
-                !("type" in message) ||
-                typeof message.type !== "string"
-            ) {
-                ws.send(JSON.stringify({
-                    type: "ERROR",
-                    message: "Invalid message structure"
-                }));
-                return;
-            }
-
-
-            if (message.type === "PING") {
-                ws.send(JSON.stringify({
-                    type: "PONG",
-                    message: "PONG",
-                }));
-
-            }
-            if (message.type !== "SEND_REPLY") {
-                ws.send(JSON.stringify({
-                    type: "ERROR",
-                    message: "Unsupported message type"
-                }));
-                return;
-            }
-            if (
-                !("queryId" in message) ||
-                typeof message.queryId !== "string" ||
-                !message.queryId.trim() ||
-                !("content" in message) ||
-                typeof message.content !== "string" ||
-                !message.content.trim() ||
-                !("clientMessageId" in message) ||
-                typeof message.clientMessageId !== "string" ||
-                !message.clientMessageId.trim()
-            ) {
-                ws.send(JSON.stringify({
-                    type: "ERROR",
-                    message: "queryId, content, and clientMessageId are required",
-                }));
-                return;
-            }
-
-            try {
-                const reply = await ReplyService.createReply(
-                    message.queryId,
-                    {
-                        content: message.content,
-                        clientMessageId: message.clientMessageId,
-                    },
-                    {
-                        userId: user.userId,
-                        role: user.role,
-                    }
-                );
-
-                ws.send(JSON.stringify({
-                    type: "REPLY_SAVED",
-                    clientMessageId: message.clientMessageId,
-                    replyId: reply._id.toString(),
-                }));
-            } catch (error: unknown) {
-                if (error instanceof AppError) {
-                    ws.send(JSON.stringify({
-                        type: "ERROR",
-                        clientMessageId: message.clientMessageId,
-                        message: error.message,
-                    }));
-                    return;
-                }
-
-                console.error("Failed to persist WebSocket reply:", error);
-
-                ws.send(JSON.stringify({
-                    type: "ERROR",
-                    clientMessageId: message.clientMessageId,
-                    message: "Failed to save reply",
-                }));
-            }
-
-
-
+            await handleWebSocketMessage(ws, data, user);
         });
 
         ws.on("close", () => {

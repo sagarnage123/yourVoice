@@ -1,11 +1,11 @@
-import type { WebSocket } from "ws";
+import type { WebSocket ,RawData} from "ws";
 import type { AuthenticatedUser } from "./connectionManager";
 import { validateClientMessage } from "./messageValidation";
 import { handleSendReply } from "./handlers/replyHandler";
 
 export async function handleWebSocketMessage(
     ws: WebSocket,
-    data: Buffer,
+    data: RawData,
     user: AuthenticatedUser
 ): Promise<void> {
     let parsed: unknown;
