@@ -91,5 +91,37 @@ export const QueryService = {
 
         return { query, replies };
     },
+    async getReplyRecipient(
+        queryId: string,
+        user: { userId: string; role: string }
+    ): Promise<string> {
+        const query = await QueryModel.findById(queryId).lean();
+
+        if (!query) {
+            throw new AppError("Query not found", 404);
+        }
+
+        if (query.type !== "private") {
+            throw new AppError("Replies are only supported for private queries", 400);
+        }
+
+        if (user.role === "student") {
+            if (query.createdBy.toString() !== user.userId) {
+                throw new AppError("Access denied", 403);
+            }
+
+            return query.assignedTo!.toString();
+        }
+
+        if (user.role === "Academician" || user.role === "counsellor") {
+            if (query.assignedTo?.toString() !== user.userId) {
+                throw new AppError("Access denied", 403);
+            }
+
+            return query.createdBy.toString();
+        }
+
+        throw new AppError("Access denied", 403);
+    },
 };
 
