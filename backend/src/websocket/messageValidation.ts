@@ -35,6 +35,18 @@ export function validateClientMessage(
             clientMessageId: value.clientMessageId,
         };
     }
+    
+    if (
+        value.type === "REPLY_RECEIVED" &&
+        "replyId" in value &&
+        typeof value.replyId === "string" &&
+        value.replyId.trim() !== ""
+    ) {
+        return {
+            type: "REPLY_RECEIVED",
+            replyId: value.replyId,
+        };
+    }
 
     return null;
 }

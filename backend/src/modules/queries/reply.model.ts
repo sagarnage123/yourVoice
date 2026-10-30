@@ -10,7 +10,9 @@ export interface IReply extends Document {
 
     content: string;
     createdAt: Date;
-    clientMessageId?: string; 
+    clientMessageId?: string;
+    deliveryStatus: "pending" | "delivered";
+    deliveredAt?: Date;
 }
 
 const ReplySchema = new Schema<IReply>(
@@ -43,6 +45,17 @@ const ReplySchema = new Schema<IReply>(
         clientMessageId: {
             type: String,
             trim: true,
+        },
+
+        deliveryStatus: {
+            type: String,
+            enum: ["pending", "delivered"],
+            default: "pending",
+            required: true,
+        },
+
+        deliveredAt: {
+            type: Date,
         },
     },
     { timestamps: { createdAt: true, updatedAt: false } }

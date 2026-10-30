@@ -9,6 +9,12 @@ export interface SendReplyMessage {
     clientMessageId: string;
 }
 
+export interface ReplyReceivedMessage {
+    type: "REPLY_RECEIVED";
+    replyId: string;
+}
+
 export type ClientMessage =
     | PingMessage
-    | SendReplyMessage;
+    | SendReplyMessage
+    | ReplyReceivedMessage;

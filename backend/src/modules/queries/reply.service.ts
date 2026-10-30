@@ -124,5 +124,66 @@ export const ReplyService = {
             .sort({ createdAt: 1 })
             .lean();
     },
-   
+
+    async markAsDelivered(
+        replyId: string,
+        recipientId: string
+    ) {
+        const reply = await ReplyModel.findById(replyId);
+
+        if (!reply) {
+            throw new AppError("Reply not found", 404);
+        }
+
+        const query = await QueryModel.findById(reply.queryId);
+
+        if (!query) {
+            throw new AppError("Query not found", 404);
+        }
+
+        const isStudentRecipient =
+            query.createdBy.toString() === recipientId &&
+            reply.senderRole === "staff";
+
+        const isStaffRecipient =
+            query.assignedTo?.toString() === recipientId &&
+            reply.senderRole === "student";
+
+        if (!isStudentRecipient && !isStaffRecipient) {
+            throw new AppError("Not authorized to acknowledge this reply", 403);
+        }
+
+        if (reply.deliveryStatus === "delivered") {
+            return reply;
+        }
+
+        const updatedReply = await ReplyModel.findOneAndUpdate(
+            {
+                _id: reply._id,
+                deliveryStatus: "pending",
+            },
+            {
+                $set: {
+                    deliveryStatus: "delivered",
+                    deliveredAt: new Date(),
+                },
+            },
+            { new: true }
+        );
+
+        if (updatedReply) {
+            return updatedReply;
+        }
+
+       
+        const latestReply = await ReplyModel.findById(reply._id);
+
+        if (latestReply?.deliveryStatus === "delivered") {
+            return latestReply;
+        }
+
+        throw new AppError("Could not update delivery status", 500);
+
+    },
+
 };
